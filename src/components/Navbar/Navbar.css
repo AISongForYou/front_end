@@ -1,0 +1,42 @@
+/* src/Navbar.css */
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    z-index: 10000;
+    height: 60px; /* Adjust height as needed */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 0 20px; /* Add padding for spacing */
+  }
+  
+  .navbar-left, .navbar-center, .navbar-right {
+    display: flex;
+    align-items: center;
+  }
+  
+  .navbar-center {
+    flex-grow: 1;
+    justify-content: center;
+  }
+  
+  .logo-fixed {
+    height: 40px;
+  }
+  
+  .menu-button {
+    background: none;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+  .profile-icon {
+    height: 40px;
+    cursor: pointer;
+  }
