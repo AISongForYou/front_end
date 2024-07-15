@@ -1,23 +1,119 @@
-/* src/MainContent.css */
+/* main.css */
+
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  font-family: 'Arial', sans-serif;
+  background-color: white;
+}
 
 .main-content {
-    text-align: center;
-    padding: 20px;
-    margin-top: 60px; /* Adjust margin to accommodate navbar height */
-  }
-  
-  .main-content h1 {
-    font-family: './fonts/KoPubDotumMedium.ttf'; /* 원하는 폰트 설정 */
-    font-size: 2rem; /* 원하는 크기 설정 */
-    color: #64b3f4; /* 원하는 색상 설정 */
-    margin: 0.5rem 0;
-  }
-  
-  .main-content h1:nth-of-type(2) {
-    font-family: './fonts/Jalnan2TTF.ttf'; /* 원하는 폰트 설정 */
-    font-size: 4rem; /* 원하는 크기 설정 */
-    background: linear-gradient(to right, #0000ff, #00ffff); /* 블루 그라데이션 색상 */
-    -webkit-background-clip: text;
-    color: transparent;
-    margin: 0.5rem 0;
-  }
+  margin-top: 80px; /* Adjust for fixed header */
+  text-align: center;
+  padding: 20px;
+}
+
+h2 {
+  color: gray;
+  margin: 10px 0;
+}
+
+h1 {
+  margin: 5px 0;
+}
+
+.highlight {
+  color: #007bff;
+}
+
+.search-bar-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.search-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #e0e0e0; /* Adjust border color to match the example */
+  border-radius: 25px;
+  padding: 5px 10px; /* Adjust padding to match the example */
+  max-width: 1040px; /* Limit the maximum width of the search bar */
+  width: 100%; /* Ensure the search bar takes full width up to the max-width */
+}
+
+.search-bar input {
+  padding: 10px;
+  font-size: 1rem;
+  border: none; /* Remove default border */
+  outline: none; /* Remove default outline */
+  flex: 1; /* Allow input to take up remaining space */
+}
+
+.search-bar .search-button {
+  background: none; /* Remove default background */
+  border: none; /* Remove default border */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-icon {
+  width: 20px; /* Adjust the size of the search icon */
+  height: 20px; /* Adjust the size of the search icon */
+  color: #e0e0e0; /* Adjust color to match the example */
+}
+
+.promo-section {
+  background-color: #007bff;
+  color: white;
+  padding: 20px;
+  border-radius: 15px;
+  display: inline-block;
+  text-align: left;
+  margin-top: 20px;
+  max-width: 1040px; /* Limit the maximum width of the promo section */
+  width: 100%; /* Ensure the promo section takes full width up to the max-width */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.promo-section p {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.promo-section h2 {
+  font-size: 1.5rem;
+  margin: 5px 0;
+  color: white;
+}
+
+.promo-button {
+  background-color: white;
+  color: #007bff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.music-players-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  width: 100%;
+  max-width: 1040px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.music-player {
+  margin: 0 2.5%; /* Adjusted to control spacing between the players */
+}

@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
 import MainContent from './pages/main/main';
 import Navbar from './components/Navbar/Navbar';
+import MusicResult from './pages/MusicResult/MusicResult'; // MusicResult 컴포넌트 경로를 맞춰주세요
 
 function App() {
   const [showText, setShowText] = useState(true);
@@ -15,19 +17,24 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
-      {showText ? (
-        <header className="App-header">
-          <h1 className="fade-in-text">당신의 비즈니스를 들려주세요</h1>
-          <h1 className="slide-up-text">AI송포유</h1>
-        </header>
-      ) : (
-        <>
-          <Navbar />
-          <MainContent />
-        </>
-      )}
-    </div>
+    <Router>
+      <div className="App">
+        {showText ? (
+          <header className="App-header">
+            <h1 className="fade-in-text">당신의 비즈니스를 들려주세요</h1>
+            <h1 className="slide-up-text">AI송포유</h1>
+          </header>
+        ) : (
+          <>
+            <Navbar />
+            <Routes>
+              <Route path="/" element={<MainContent />} />
+              <Route path="/music-result" element={<MusicResult />} />
+            </Routes>
+          </>
+        )}
+      </div>
+    </Router>
   );
 }
 

@@ -1,12 +1,52 @@
 import React from 'react';
 import './main.css';
+import MusicPlayer from '/Users/kimtaehyeong/Desktop/Miracle100/front/song4u/front_end/src/pages/MusicPlayer/MusicPlayer.js';
 
 const MainContent = () => {
   return (
-    <div className="main-content fade-in">
-      <h1>당신의 비즈니스를 들려주세요</h1>
-      <h1>AI송포유</h1>
-      {/* Other main content components go here */}
+    <div className="main-content">
+      <div className="section">
+        <div>
+          <h2>쉽고 빠른 맞춤형 AI 광고 음악 플랫폼</h2>
+          <h1>당신의 비즈니스를 들려주세요</h1>
+          <h1 className="highlight">AI 송포유</h1>
+        </div>
+      </div>
+      <div className="section">
+        <div className="search-bar-container">
+          <div className="search-bar">
+            <input type="text" placeholder="어떤 스타일의 음악을 원하시나요?" />
+            <button className="search-button">
+              <img src="./search.png" alt="Search" className="search-icon" />
+            </button>
+          </div>
+        </div>
+      </div>
+      <div className="section">
+        <div className="promo-section">
+          <p>당신의 비즈니스를 들려주세요</p>
+          <br/>
+          <h2>맞춤형 <br />AI 광고음악</h2>
+          <br/>
+          <button className="promo-button">지금 광고음악 만들기 ▶</button>
+        </div>
+      </div>
+      <div className="section">
+        <MusicPlayer
+          cover="./song1_cover.png"
+          song="/path/to/song1.mp3"
+          title="첫 번째 곡"
+          artist="태형"
+        />
+      </div>
+      <div className="section">
+        <MusicPlayer
+          cover="./song2_cover.png"
+          song="/path/to/song2.mp3"
+          title="두 번째 곡"
+          artist="Artist Name"
+        />
+      </div>
     </div>
   );
 };
