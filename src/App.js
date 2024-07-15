@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import './App.css';
-import MainContent from './pages/main/main';
-import Navbar from './components/Navbar/Navbar';
+import React, { useState, useEffect } from "react";
+import "./App.css";
+import MainContent from "./pages/main/main";
+import Navbar from "./components/Navbar/Navbar";
+import QuestionPage from "./questionPage";
+import LoadingPage from "./loadingPage";
+import "tailwindcss/tailwind.css";
 
 function App() {
   const [showText, setShowText] = useState(true);
