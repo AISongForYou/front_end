@@ -1,15 +1,14 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from "react-router-dom";
 import './MusicResult.css';
-import { useNavigate } from "react-router-dom";
 
 const MusicResult = () => {
-  const navigate = useNavigate();
-
   const location = useLocation();
+  const navigate = useNavigate();
   const { data } = location.state || {};
   const song = data?.songs[0];
   const imgUrl = data?.image.url;
-  
+
   const [audio, setAudio] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
