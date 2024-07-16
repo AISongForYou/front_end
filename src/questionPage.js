@@ -18,7 +18,7 @@ const questions = [
       "홍보하고자 하는 제품/서비스명을 입력해주세요.",
     ],
     required: [true, false],
-    titles: ["비즈니스 소개", "제품/서비스"],
+    titles: ["- 비즈니스 소개", "제품/서비스 입력"],
     tipsTitle: ["노래 잘 뽑는 법 1"],
     tips: [
       "홍보하고자 하는 서비스나 매장명을 입력하면 좋아요.",
@@ -31,7 +31,7 @@ const questions = [
     text: "만들고 싶은 노래 장르와\n강조할 내용을 입력해 주세요.",
     placeholders: ["노래에 꼭 어필되었으면 하는 내용을 입력해주세요."],
     required: [true],
-    titles: ["강조할 내용"],
+    titles: ["- 강조할 내용"],
     tipsTitle: ["노래 잘 뽑는 법 2"],
     tips: ["우리 가게만의 특/장점 서비스 혹은 이벤트를 소개해주세요."],
     example: "첫 방문 고객에게 요가 매트 무료 제공 이벤트를 홍보하고 싶어요.",
@@ -43,7 +43,7 @@ const questions = [
       "이미지에 들어갔으면 하는 광고 문구를 입력해주세요.",
     ],
     required: [false, false],
-    titles: ["이미지 분위기", "광고 이미지 문구"],
+    titles: ["이미지 분위기 입력", "광고 이미지 문구 입력"],
     tipsTitle: ["광고 이미지 잘 뽑는 법"],
     tips: [
       "비즈니스와 어울리는 이미지 스타일을 입력하면 좋아요.",
@@ -131,6 +131,7 @@ function QuestionPage({ surveyData, setSurveyData }) {
       //   .catch(error => {
       //     console.error("에러:", error);
       //   });
+      navigate("/loading-page");
     }
   };
 
@@ -188,7 +189,6 @@ function QuestionPage({ surveyData, setSurveyData }) {
               className={`w-full p-3 text-base rounded-md border border-gray-300 bg-gray-600 text-white resize-none ${
                 currentQuestion.required[index] ? "h-40" : "h-14"
               }`}
-              style={{ whiteSpace: "nowrap" }}
             />
           )}
         </div>
