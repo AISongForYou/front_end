@@ -29,7 +29,7 @@ function App() {
 
   return (
     <Router>
-      <div className="App">
+      <div className="App no-scroll">
         {showText ? (
           <header className="App-header">
             <h1 className="fade-in-text">당신의 비즈니스를 들려주세요</h1>
