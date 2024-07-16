@@ -142,6 +142,7 @@ function QuestionPage({ surveyData, setSurveyData }) {
       navigate("/");
     }
   };
+
   return (
     <div className="p-6 mt-20">
       <button

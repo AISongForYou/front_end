@@ -5,6 +5,8 @@ import Navbar from "./components/Navbar/Navbar";
 import MusicResult from "./pages/MusicResult/MusicResult"; // MusicResult 컴포넌트 경로를 맞춰주세요
 import QuestionPage from "./questionPage";
 import LoadingPage from "./loadingPage";
+import AdSelectPage from "./pages/ad/adSelect";
+import AiRingoPage from "./pages/ad/aiRingo";
 import "tailwindcss/tailwind.css";
 import {
   BrowserRouter as Router,
@@ -50,6 +52,7 @@ function App() {
               />
               <Route path="/loading-page" element={<LoadingPage />} />
               <Route path="/" element={<Navigate to="/question/1" />} />
+              <Route path="/adSelect-page" element={<AdSelectPage />} />
             </Routes>
           </>
         )}
