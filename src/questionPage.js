@@ -64,14 +64,15 @@ function QuestionPage({ surveyData, setSurveyData }) {
   const { id } = useParams();
   const questionId = parseInt(id, 10);
   const navigate = useNavigate();
+  console.log(questions, questionId)
   const currentQuestion = questions[questionId - 1];
+  console.log(surveyData)
   const [answers, setAnswers] = useState(
     surveyData[questionId]?.answers ||
       currentQuestion.placeholders.map(() => "")
   );
   const [showAlert, setShowAlert] = useState(false);
   const [showExample, setShowExample] = useState(false);
-
   useEffect(() => {
     setAnswers(
       surveyData[questionId]?.answers ||
@@ -114,6 +115,7 @@ function QuestionPage({ surveyData, setSurveyData }) {
       //   .catch(error => {
       //     console.error("에러:", error);
       //   });
+      navigate('/loading-page');
     }
   };
 

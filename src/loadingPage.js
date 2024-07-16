@@ -1,6 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const LoadingPage = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      navigate("/music-result");
+    }, 5000); // 5초 후에 MusicResult로 이동
+
+    return () => clearTimeout(timer); // 컴포넌트 언마운트 시 타이머 클리어
+  }, [navigate]);
+
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-white">
       <div className="w-full max-w-lg">

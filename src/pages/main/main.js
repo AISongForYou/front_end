@@ -1,8 +1,15 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import './main.css';
-import MusicPlayer from '/Users/kimtaehyeong/Desktop/Miracle100/front/song4u/front_end/src/pages/MusicPlayer/MusicPlayer.js';
+import MusicPlayer from '../MusicPlayer/MusicPlayer.js';
 
 const MainContent = () => {
+  const navigate = useNavigate();
+
+  const handleStartClick = () => {
+    navigate('/question/1'); // 첫 번째 질문 페이지로 이동
+  };
+
   return (
     <div className="main-content">
       <div className="section">
@@ -28,7 +35,9 @@ const MainContent = () => {
           <br/>
           <h2>맞춤형 <br />AI 광고음악</h2>
           <br/>
-          <button className="promo-button">지금 광고음악 만들기 ▶</button>
+          <button className="promo-button" onClick={handleStartClick}>
+            지금 광고음악 만들기 ▶
+          </button>
         </div>
       </div>
       <div className="section">
