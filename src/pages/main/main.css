@@ -102,6 +102,11 @@ h1 {
   margin-right: auto;
 }
 
+.promo-image img {
+  max-width: 200px; /* Adjust the max width of the image */
+  border-radius: 15px;
+}
+
 .promo-section p {
   font-size: 1rem;
   margin: 0;
