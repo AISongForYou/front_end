@@ -1,7 +1,10 @@
 import React from "react";
 import "./MusicResult.css";
+import { useNavigate } from "react-router-dom";
 
 const MusicResult = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="music-result">
       <h2>나만의 AI 작곡가가 만든 새로운 곡을 감상해보세요</h2>
@@ -28,7 +31,12 @@ const MusicResult = () => {
         <p>이사 천리길을 걸어 나가 모두 맞이해</p>
         <p>한 번에 한 번에</p>
       </div>
-      <button className="create-song-button">지금 바로 광고하기</button>
+      <button
+        className="create-song-button"
+        onClick={() => navigate("/adSelect-page")}
+      >
+        지금 바로 광고하기
+      </button>
     </div>
   );
 };

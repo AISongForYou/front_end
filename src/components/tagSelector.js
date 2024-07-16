@@ -37,6 +37,10 @@ function TagSelector({ selectedTags, setSelectedTags }) {
     }
   };
 
+  const removeTag = (tag) => {
+    setSelectedTags(selectedTags.filter((t) => t !== tag));
+  };
+
   return (
     <div className="p-4 bg-gray-600 text-white rounded-md">
       <h2 className="text-lg mb-2 text-white">장르(최대 2개)</h2>
@@ -44,9 +48,15 @@ function TagSelector({ selectedTags, setSelectedTags }) {
         {selectedTags.map((tag) => (
           <span
             key={tag}
-            className="inline-block bg-blue-500 text-white py-1 px-3 rounded-full mr-2 mb-2"
+            className="inline-block bg-blue-500 text-white py-1 px-3 rounded-full mr-2 mb-2 relative"
           >
             {tag}
+            <span
+              onClick={() => removeTag(tag)}
+              className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 cursor-pointer bg-gray-700 text-white rounded-full w-4 h-4 flex items-center justify-center"
+            >
+              &times;
+            </span>
           </span>
         ))}
       </div>
