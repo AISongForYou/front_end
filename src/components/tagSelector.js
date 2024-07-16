@@ -1,56 +1,69 @@
-import React, { useState } from "react";
+import React from "react";
 
 const tags = [
-  "mambo",
-  "latin pop",
-  "latin rock",
-  "spanish",
-  "salsa",
-  "bossa nova",
-  "samba",
-  "pachanga",
-  "rock en español",
+  "팝",
+  "R&B",
+  "힙합",
+  "인디",
+  "락",
+  "뮤지컬",
+  "케이팝",
+  "컨트리",
+  "동요",
+  "발라드",
+  "댄스",
+  "트로트",
+  "재즈",
+  "클래식",
+  "EDM",
+  "하우스",
+  "테크노",
+  "펑크",
+  "레게",
+  "제이팝",
+  "중국팝",
+  "어쿠스틱",
+  "보사노바",
+  "삼바",
+  "탱고",
 ];
 
-function TagSelector() {
-  const [selectedTags, setSelectedTags] = useState([]);
-
+function TagSelector({ selectedTags, setSelectedTags }) {
   const toggleTag = (tag) => {
-    setSelectedTags((prevSelectedTags) =>
-      prevSelectedTags.includes(tag)
-        ? prevSelectedTags.filter((t) => t !== tag)
-        : [...prevSelectedTags, tag]
-    );
+    if (selectedTags.includes(tag)) {
+      setSelectedTags(selectedTags.filter((t) => t !== tag));
+    } else if (selectedTags.length < 2) {
+      setSelectedTags([...selectedTags, tag]);
+    }
   };
 
   return (
-    <div className="p-4 text-darkgrey">
-      <h2 className="mb-2">음악 장르 선택</h2>
+    <div className="p-4 bg-gray-600 text-white rounded-md">
+      <h2 className="text-lg mb-2 text-white">장르(최대 2개)</h2>
+      <div className="mb-4">
+        {selectedTags.map((tag) => (
+          <span
+            key={tag}
+            className="inline-block bg-blue-500 text-white py-1 px-3 rounded-full mr-2 mb-2"
+          >
+            {tag}
+          </span>
+        ))}
+      </div>
       <div className="flex overflow-x-scroll space-x-2 pb-2">
         {tags.map((tag) => (
           <button
             key={tag}
             onClick={() => toggleTag(tag)}
-            className={`py-2 px-4 text-white rounded-full whitespace-nowrap ${
-              selectedTags.includes(tag) ? "bg-blue-600" : "bg-gray-600"
+            className={`py-2 px-4 rounded-full whitespace-nowrap ${
+              selectedTags.includes(tag)
+                ? "bg-blue-500 text-white"
+                : "bg-gray-800 text-gray-200"
             }`}
           >
             {tag}
           </button>
         ))}
-      </div>
-      <div className="mt-4">
-        <h3 className="mb-2">선택된 항목</h3>
-        <div className="flex flex-wrap space-x-2">
-          {selectedTags.map((tag) => (
-            <span
-              key={tag}
-              className="py-1 px-3 bg-blue-600 text-white rounded-full"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
       </div>
     </div>
   );
