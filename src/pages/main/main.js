@@ -31,29 +31,34 @@ const MainContent = () => {
       </div>
       <div className="section">
         <div className="promo-section">
-          <p>당신의 비즈니스를 들려주세요</p>
-          <br/>
-          <h2>맞춤형 <br />AI 광고음악</h2>
-          <br/>
-          <button className="promo-button" onClick={handleStartClick}>
-            지금 광고음악 만들기 ▶
-          </button>
+          <div className="promo-text">
+            <p>당신의 비즈니스를 들려주세요</p>
+            <br/>
+            <h2>맞춤형 <br />AI 광고음악</h2>
+            <br/>
+            <button className="promo-button" onClick={handleStartClick}>
+              지금 광고음악 만들기 ▶
+            </button>
+          </div>
+          <div className="promo-image">
+            <img src="./누끼.png" alt="Promo" />
+          </div>
         </div>
       </div>
       <div className="section">
         <MusicPlayer
           cover="./song1_cover.png"
-          song="/path/to/song1.mp3"
-          title="첫 번째 곡"
-          artist="태형"
+          song="./100_.mp4"
+          title="미라클 100"
+          artist="pop electronic"
         />
       </div>
       <div className="section">
         <MusicPlayer
           cover="./song2_cover.png"
-          song="/path/to/song2.mp3"
-          title="두 번째 곡"
-          artist="Artist Name"
+          song="./AI_.mp4"
+          title="AI 송포유"
+          artist="playful pop rhythmic"
         />
       </div>
     </div>

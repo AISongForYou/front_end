@@ -1,7 +1,19 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import './MusicPlayer.css';
 
 const MusicPlayer = ({ cover, song, title, artist }) => {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef(null);
+
+  const handlePlayPause = () => {
+    if (isPlaying) {
+      audioRef.current.pause();
+    } else {
+      audioRef.current.play();
+    }
+    setIsPlaying(!isPlaying);
+  };
+
   return (
     <div className="music-player">
       <div className="album-cover1">
@@ -12,9 +24,12 @@ const MusicPlayer = ({ cover, song, title, artist }) => {
         <p>{artist}</p>
       </div>
       <div className="controls">
-        <button className="control-button">▶</button>
+        <button className="control-button" onClick={handlePlayPause}>
+          {isPlaying ? '❚❚' : '▶'}
+        </button>
         <button className="control-button">⋮</button>
       </div>
+      <audio ref={audioRef} src={song}></audio>
     </div>
   );
 };
