@@ -1,61 +1,53 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import './main.css';
-import MusicPlayer from '../MusicPlayer/MusicPlayer.js';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import "./main.css";
+import MusicPlayer from "../MusicPlayer/MusicPlayer.js";
+import PromoSection from "../../components/PromoSection/promoSection.js";
+import TabBar from "../../components/tabBar.js";
 
 const MainContent = () => {
   const navigate = useNavigate();
 
   const handleStartClick = () => {
-    navigate('/question/1'); // 첫 번째 질문 페이지로 이동
+    navigate("/question/1"); // 첫 번째 질문 페이지로 이동
   };
 
   return (
-    <div className="main-content">
-      <div className="section">
+    <div className="mt-20 p-4">
+      <div className="section-container">
         <div>
-          <h2>쉽고 빠른 맞춤형 AI 광고 음악 플랫폼</h2>
-          <h1>당신의 비즈니스를 들려주세요</h1>
-          <h1 className="highlight">AI 송포유</h1>
+          <h2 className="text-gray-500">
+            쉽고 빠른 맞춤형 AI 광고 음악 플랫폼
+          </h2>
+          <h1 className="text-3xl font-bold mt-2">
+            당신의 비즈니스를 들려주세요
+          </h1>
+          <h1 className="text-3xl font-bold text-blue-500 mt-1">AI 송포유</h1>
         </div>
       </div>
-      <div className="section">
-        <div className="search-bar-container">
-          <div className="search-bar">
-            <input type="text" placeholder="어떤 스타일의 음악을 원하시나요?" />
-            <button className="search-button">
-              <img src="./search.png" alt="Search" className="search-icon" />
-            </button>
+      <div className="section-container mt-8">
+        <p className="text-gray-700">이런 노래들을 만들 수 있어요.</p>
+        <div>
+          <div>
+            <MusicPlayer
+              cover="./song1_cover.png"
+              song="/path/to/song1.mp3"
+              title="첫 번째 곡"
+              artist="태형"
+            />
+          </div>
+          <div>
+            <MusicPlayer
+              cover="./song2_cover.png"
+              song="/path/to/song2.mp3"
+              title="두 번째 곡"
+              artist="Artist Name"
+            />
           </div>
         </div>
       </div>
-      <div className="section">
-        <div className="promo-section">
-          <p>당신의 비즈니스를 들려주세요</p>
-          <br/>
-          <h2>맞춤형 <br />AI 광고음악</h2>
-          <br/>
-          <button className="promo-button" onClick={handleStartClick}>
-            지금 광고음악 만들기 ▶
-          </button>
-        </div>
-      </div>
-      <div className="section">
-        <MusicPlayer
-          cover="./song1_cover.png"
-          song="/path/to/song1.mp3"
-          title="첫 번째 곡"
-          artist="태형"
-        />
-      </div>
-      <div className="section">
-        <MusicPlayer
-          cover="./song2_cover.png"
-          song="/path/to/song2.mp3"
-          title="두 번째 곡"
-          artist="Artist Name"
-        />
-      </div>
+      <PromoSection onClick={handleStartClick} />
+      <TabBar />
     </div>
   );
 };
