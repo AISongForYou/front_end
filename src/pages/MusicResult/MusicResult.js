@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import React from 'react';
 import './MusicResult.css';
+import { useNavigate } from "react-router-dom";
 
 const MusicResult = () => {
+  const navigate = useNavigate();
+
   const location = useLocation();
   const { data } = location.state || {};
   const song = data?.songs[0];
@@ -41,7 +43,12 @@ const MusicResult = () => {
       <div className="lyrics-section">
         <pre>{song.lyric}</pre>
       </div>
-      <button className="create-song-button">지금 바로 광고하기</button>
+      <button
+        className="create-song-button"
+        onClick={() => navigate("/adSelect-page")}
+      >
+        지금 바로 광고하기
+      </button>
     </div>
   );
 };

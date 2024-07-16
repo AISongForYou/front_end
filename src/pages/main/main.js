@@ -13,7 +13,7 @@ const MainContent = () => {
   };
 
   return (
-    <div className="mt-20 p-4">
+    <div className="no-scroll mt-11 p-4">
       <div className="section-container">
         <div>
           <h2 className="text-gray-500">

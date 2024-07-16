@@ -1,4 +1,13 @@
 /* src/App.css */
+@font-face {
+  font-family: 'KoPubDotumMedium';
+  src: url('./fonts/KoPubDotumMedium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Jalnan2';
+  src: url('./fonts/Jalnan2TTF.ttf') format('truetype');
+}
 
 .App-header {
   text-align: center;
@@ -7,29 +16,38 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh; /* 화면의 세로 중앙에 위치시키기 위해 높이를 100%로 설정 */
+  height: 100vh;
+  /* 화면의 세로 중앙에 위치시키기 위해 높이를 100%로 설정 */
 }
 
 .fade-in-text {
-  font-family: './fonts/KoPubDotumMedium.ttf'; /* 원하는 폰트 설정 */
-  font-size: 2rem; /* 원하는 크기 설정 */
-  color: #64b3f4; /* 원하는 색상 설정 */
+  font-family: 'KoPubDotumMedium', sans-serif;
+  /* 원하는 폰트 설정 */
+  font-size: 1.5rem;
+  /* 원하는 크기 설정 */
+  color: #64b3f4;
+  /* 원하는 색상 설정 */
   opacity: 0;
   animation: fadeIn 2s forwards;
-  animation-delay: 0.5s; /* 지연 시간 설정 */
+  animation-delay: 0.5s;
+  /* 지연 시간 설정 */
   margin: 0;
 }
 
 .slide-up-text {
-  font-family: './fonts/Jalnan2TTF.ttf'; /* 원하는 폰트 설정 */
-  font-size: 8rem; /* 원하는 크기 설정 */
-  background: linear-gradient(to right, #0000ff, #00ffff); /* 블루 그라데이션 색상 */
+  font-family: 'Jalnan2', sans-serif;
+  /* 원하는 폰트 설정 */
+  font-size: 5rem;
+  /* 원하는 크기 설정 */
+  background: linear-gradient(to right, #0000ff, #00ffff);
+  /* 블루 그라데이션 색상 */
   -webkit-background-clip: text;
   color: transparent;
   position: relative;
   opacity: 0;
   animation: slideUp 2s forwards;
-  animation-delay: 2.5s; /* "당신의 비즈니스를 들려주세요" 애니메이션 완료 후 시작 */
+  animation-delay: 2.5s;
+  /* "당신의 비즈니스를 들려주세요" 애니메이션 완료 후 시작 */
   margin: 0;
 }
 
@@ -44,8 +62,15 @@
     opacity: 0;
     top: 20px;
   }
+
   to {
     opacity: 1;
     top: 0;
   }
+}
+
+.no-scroll {
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
 }

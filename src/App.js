@@ -5,6 +5,8 @@ import Navbar from './components/Navbar/Navbar';
 import MusicResult from './pages/MusicResult/MusicResult';
 import QuestionPage from "./questionPage";
 import LoadingPage from "./loadingPage";
+import AdSelectPage from "./pages/ad/adSelect";
+import AiRingoPage from "./pages/ad/aiRingo";
 import "tailwindcss/tailwind.css";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 
@@ -23,7 +25,7 @@ function App() {
 
   return (
     <Router>
-      <div className="App">
+      <div className="App no-scroll">
         {showText ? (
           <header className="App-header">
             <h1 className="fade-in-text">당신의 비즈니스를 들려주세요</h1>
@@ -45,7 +47,9 @@ function App() {
                   />
                 }
               />
-              <Route path="/loading-page" element={<LoadingPage setResultData={setResultData} />} />
+              <Route path="/loading-page" element={<LoadingPage />} />
+              <Route path="/" element={<Navigate to="/question/1" />} />
+              <Route path="/adSelect-page" element={<AdSelectPage />} />
             </Routes>
           </>
         )}
