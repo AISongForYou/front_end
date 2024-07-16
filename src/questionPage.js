@@ -8,55 +8,49 @@ import {
 
 import RefuseAlert from "./components/refuseAlert";
 import TagSelector from "./components/tagSelector";
+import Toggle from "./components/toggle";
 
 const questions = [
   {
-    text: "당신의 비즈니스를 자유롭게 설명해주세요!",
-    note: "구체적일 수록 더 멋진 가사를 만들 수 있어요.",
+    text: "노래에 담을 당신의\n비즈니스를 소개해주세요.",
     placeholders: [
-      "ex). 깨끗한 기름으로 하루 60마리만 튀겨 만드는 60계 치킨 건대입구점",
-      "(선택)제품",
-      "(선택)업종",
+      "홍보하고자 하는 비즈니스 내용을 입력해주세요.",
+      "홍보하고자 하는 제품/서비스명을 입력해주세요.",
     ],
-    required: [true, false, false],
-    tipsTitle: ["가사 잘 쓰는 법"],
+    required: [true, false],
+    titles: ["비즈니스 소개", "제품/서비스"],
+    tipsTitle: ["노래 잘 뽑는 법 1"],
     tips: [
-      "홍보하고자 하는 제품을 입력하면 좋아요.",
-      "홍보하고자 하는 매장명을 입력하면 좋아요.",
+      "홍보하고자 하는 서비스나 매장명을 입력하면 좋아요.",
       "꼭 필요한 내용만 간단히 입력해주세요.",
     ],
     example:
-      "예시: 멋진 노래를 만들기 위한 구체적인 설명과 예시 문구를 적어주세요.\n예시 줄바꿈1\n예시 줄바꿈2",
+      "비즈니스 소개: 1억원대의 산소공급기와 함께 요가와 명상을 제공하는 희소 요가원\n서비스명: 청정 요가수업",
   },
   {
-    text: "광고음악으로 강조하고 싶은 내용을 입력해주세요.",
-    note: "구체적일 수록 더 멋진 가사를 만들 수 있어요.",
-    placeholders: ["예시문구 추가필요"],
+    text: "만들고 싶은 노래 장르와\n강조할 내용을 입력해 주세요.",
+    placeholders: ["노래에 꼭 어필되었으면 하는 내용을 입력해주세요."],
     required: [true],
-    tipsTitle: ["가사 잘 쓰는 법"],
-    tips: [
-      "홍보하고자 하는 제품을 입력하면 좋아요.",
-      "홍보하고자 하는 매장명을 입력하면 좋아요.",
-      "꼭 필요한 내용만 간단히 입력해주세요.",
-    ],
-    example: "제품명:",
+    titles: ["강조할 내용"],
+    tipsTitle: ["노래 잘 뽑는 법 2"],
+    tips: ["우리 가게만의 특/장점 서비스 혹은 이벤트를 소개해주세요."],
+    example: "첫 방문 고객에게 요가 매트 무료 제공 이벤트를 홍보하고 싶어요.",
   },
   {
-    text: "원하는 광고음악의 스타일을 자유롭게 입력해주세요",
-    note: "구체적일 수록 더 멋진 음악을 만들 수 있어요",
+    text: "광고이미지도!!! 제작해드립니다.",
     placeholders: [
-      "예시문구 추가필요",
-      "(선택)광고 이미지 스타일",
-      "(선택)광고문구",
+      "광고 사진에 담겼으면 하는 느낌이나 스타일을 입력해주세요.",
+      "이미지에 들어갔으면 하는 광고 문구를 입력해주세요.",
     ],
-    required: [true, false, false],
-    tipsTitle: ["가사 잘 쓰는 법"],
+    required: [false, false],
+    titles: ["이미지 분위기", "광고 이미지 문구"],
+    tipsTitle: ["광고 이미지 잘 뽑는 법"],
     tips: [
-      "홍보하고자 하는 제품을 입력하면 좋아요.",
-      "홍보하고자 하는 매장명을 입력하면 좋아요.",
-      "꼭 필요한 내용만 간단히 입력해주세요.",
+      "비즈니스와 어울리는 이미지 스타일을 입력하면 좋아요.",
+      "이미지 문구는 간결하게 입력해주세요.",
     ],
-    example: "제품명:",
+    example:
+      "이미지 분위기: 숲속의 느낌, 자연의 색감, 명상하는 사람들\n광고 이미지 문구: First Visit Free, 7월 여름맞이 30% 할인",
   },
 ];
 
@@ -64,22 +58,34 @@ function QuestionPage({ surveyData, setSurveyData }) {
   const { id } = useParams();
   const questionId = parseInt(id, 10);
   const navigate = useNavigate();
-  console.log(questions, questionId)
   const currentQuestion = questions[questionId - 1];
-  console.log(surveyData)
   const [answers, setAnswers] = useState(
     surveyData[questionId]?.answers ||
       currentQuestion.placeholders.map(() => "")
   );
   const [showAlert, setShowAlert] = useState(false);
   const [showExample, setShowExample] = useState(false);
+  const [toggles, setToggles] = useState(
+    currentQuestion.required.map((isRequired) => isRequired)
+  );
+  const [selectedTags, setSelectedTags] = useState(
+    surveyData[questionId]?.selectedTags || []
+  );
+
   useEffect(() => {
     setAnswers(
       surveyData[questionId]?.answers ||
         currentQuestion.placeholders.map(() => "")
     );
     setShowAlert(false);
-  }, [questionId, surveyData, currentQuestion.placeholders]);
+    setToggles(currentQuestion.required.map((isRequired) => isRequired));
+    setSelectedTags(surveyData[questionId]?.selectedTags || []);
+  }, [
+    questionId,
+    surveyData,
+    currentQuestion.placeholders,
+    currentQuestion.required,
+  ]);
 
   const handleChange = (index, value) => {
     const newAnswers = [...answers];
@@ -87,11 +93,21 @@ function QuestionPage({ surveyData, setSurveyData }) {
     setAnswers(newAnswers);
   };
 
+  const handleToggleChange = (index, value) => {
+    const newToggles = [...toggles];
+    newToggles[index] = value;
+    setToggles(newToggles);
+    if (!value) {
+      handleChange(index, ""); // Clear the answer if toggled off
+    }
+  };
+
   const handleNext = () => {
     if (
       currentQuestion.required.some(
         (isRequired, index) => isRequired && answers[index].trim() === ""
-      )
+      ) ||
+      (questionId === 2 && selectedTags.length === 0)
     ) {
       setShowAlert(true);
       return;
@@ -99,7 +115,7 @@ function QuestionPage({ surveyData, setSurveyData }) {
 
     const newSurveyData = {
       ...surveyData,
-      [questionId]: { answers },
+      [questionId]: { answers, selectedTags },
     };
     setSurveyData(newSurveyData);
 
@@ -115,18 +131,18 @@ function QuestionPage({ surveyData, setSurveyData }) {
       //   .catch(error => {
       //     console.error("에러:", error);
       //   });
-      navigate('/loading-page');
     }
   };
 
   const handleBack = () => {
     if (questionId > 1) {
       navigate(`/question/${questionId - 1}`);
+    } else {
+      navigate("/");
     }
   };
-
   return (
-    <div className="p-6">
+    <div className="p-6 mt-20">
       <button
         onClick={handleBack}
         className="flex items-center mb-4 text-blue-500"
@@ -134,25 +150,48 @@ function QuestionPage({ surveyData, setSurveyData }) {
         <ArrowLeftIcon className="h-5 w-5 mr-2" aria-hidden="true" />
         뒤로가기
       </button>
-      <h1 className="text-xl mb-2">{currentQuestion.text}</h1>
-      {currentQuestion.note && (
-        <p className="mb-4 text-gray-700">{currentQuestion.note}</p>
-      )}
-      <div className="App">
-        <TagSelector />
-      </div>
+      <h1 className="text-xl font-bold  whitespace-pre-line mb-2">
+        {currentQuestion.text}
+      </h1>
       <div className="pb-2">
         {showAlert && <RefuseAlert message="모든 필수 항목을 입력해 주세요." />}
       </div>
+      {questionId === 2 && (
+        <div className="App mb-4">
+          <TagSelector
+            selectedTags={selectedTags}
+            setSelectedTags={setSelectedTags}
+          />
+        </div>
+      )}
       {currentQuestion.placeholders.map((placeholder, index) => (
-        <textarea
-          value={answers[index] || ""}
-          onChange={(e) => handleChange(index, e.target.value)}
-          placeholder={currentQuestion.placeholders[index]}
-          className={`w-full p-3 text-lg rounded-md border border-gray-300 bg-gray-600 text-white resize-none mb-4 ${
-            currentQuestion.required[index] ? "h-40" : "h-14"
-          }`}
-        />
+        <div key={index} className="mb-4">
+          <div className="flex items-center">
+            {!currentQuestion.required[index] && (
+              <div className="mb-2">
+                <Toggle
+                  label=""
+                  enabled={toggles[index]}
+                  setEnabled={(value) => handleToggleChange(index, value)}
+                />
+              </div>
+            )}
+            <label className="block text-lg mb-2 ml-2">
+              {currentQuestion.titles[index]}
+            </label>
+          </div>
+          {toggles[index] && (
+            <textarea
+              value={answers[index] || ""}
+              onChange={(e) => handleChange(index, e.target.value)}
+              placeholder={placeholder}
+              className={`w-full p-3 text-base rounded-md border border-gray-300 bg-gray-600 text-white resize-none ${
+                currentQuestion.required[index] ? "h-40" : "h-14"
+              }`}
+              style={{ whiteSpace: "nowrap" }}
+            />
+          )}
+        </div>
       ))}
       {currentQuestion.tips && (
         <div className="mb-4">
@@ -172,7 +211,7 @@ function QuestionPage({ surveyData, setSurveyData }) {
         <div className="mb-4">
           <button
             onClick={() => setShowExample(!showExample)}
-            className="flex items-center text-blue-500 underline"
+            className="flex items-center text-blue-500"
           >
             {showExample ? (
               <ChevronDownIcon className="h-5 w-5 mr-1" aria-hidden="true" />
@@ -182,7 +221,7 @@ function QuestionPage({ surveyData, setSurveyData }) {
             예시 펼치기
           </button>
           {showExample && (
-            <div className="mt-2 p-2 border border-gray-300 rounded bg-gray-100 text-gray-600 text-sm whitespace-pre-line">
+            <div className="mt-2 p-2 border border-gray-300 rounded bg-gray-100 text-gray-600 text-sm leading-loose whitespace-pre-line">
               <p>{currentQuestion.example}</p>
             </div>
           )}
