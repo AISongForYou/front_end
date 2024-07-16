@@ -1,21 +1,17 @@
-import React, { useState, useEffect } from "react";
-import "./App.css";
-import MainContent from "./pages/main/main";
-import Navbar from "./components/Navbar/Navbar";
-import MusicResult from "./pages/MusicResult/MusicResult"; // MusicResult 컴포넌트 경로를 맞춰주세요
+import React, { useState, useEffect } from 'react';
+import './App.css';
+import MainContent from './pages/main/main';
+import Navbar from './components/Navbar/Navbar';
+import MusicResult from './pages/MusicResult/MusicResult';
 import QuestionPage from "./questionPage";
 import LoadingPage from "./loadingPage";
 import "tailwindcss/tailwind.css";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 
 function App() {
   const [showText, setShowText] = useState(true);
   const [surveyData, setSurveyData] = useState({});
+  const [resultData, setResultData] = useState(null);
 
   useEffect(() => {
     const textTimer = setTimeout(() => {
@@ -38,7 +34,8 @@ function App() {
             <Navbar />
             <Routes>
               <Route path="/" element={<MainContent />} />
-              <Route path="/music-result" element={<MusicResult />} />
+              <Route path="/music-result" element={<MusicResult data={resultData} />} />
+              <Route path="/" element={<Navigate to="/question/1" />} />
               <Route
                 path="/question/:id"
                 element={
@@ -48,8 +45,7 @@ function App() {
                   />
                 }
               />
-              <Route path="/loading-page" element={<LoadingPage />} />
-              <Route path="/" element={<Navigate to="/question/1" />} />
+              <Route path="/loading-page" element={<LoadingPage setResultData={setResultData} />} />
             </Routes>
           </>
         )}

@@ -5,6 +5,7 @@ import {
   ChevronRightIcon,
   ChevronDownIcon,
 } from "@heroicons/react/20/solid";
+import axios from 'axios'
 
 import RefuseAlert from "./components/refuseAlert";
 import TagSelector from "./components/tagSelector";
@@ -118,20 +119,22 @@ function QuestionPage({ surveyData, setSurveyData }) {
       [questionId]: { answers, selectedTags },
     };
     setSurveyData(newSurveyData);
-
+  
     if (questionId < questions.length) {
       navigate(`/question/${questionId + 1}`);
     } else {
       console.log("제출 데이터:", newSurveyData);
-      // axios.post('https://your-api-endpoint.com/submit', newSurveyData)
-      //   .then(response => {
-      //     console.log("성공:", response.data);
-      //     navigate("/submit-success");
-      //   })
-      //   .catch(error => {
-      //     console.error("에러:", error);
-      //   });
-      navigate("/loading-page");
+      // Construct the payload
+      const payload = {
+        product: newSurveyData[1].answers[1],
+        business: newSurveyData[1].answers[0],
+        emphasis: newSurveyData[2].answers[0],
+        genre: newSurveyData[2].selectedTags.join(", "),
+        imageStyle: newSurveyData[3].answers[0],
+        addPhrases: newSurveyData[3].answers[1]
+      };
+      console.log(payload)
+      navigate("/loading-page", { state: { surveyData: newSurveyData, payload } });
     }
   };
 
@@ -142,6 +145,7 @@ function QuestionPage({ surveyData, setSurveyData }) {
       navigate("/");
     }
   };
+
   return (
     <div className="p-6 mt-20">
       <button

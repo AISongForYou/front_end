@@ -1,16 +1,27 @@
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import axios from 'axios';
 
 const LoadingPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const payload = location.state?.payload; 
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      navigate("/music-result");
-    }, 5000); // 5초 후에 MusicResult로 이동
+    const fetchData = async () => {
+      try {
+        const response = await axios.post('https://songforyou.azurewebsites.net/generate', payload); 
+        console.log("성공:", response.data);
+        navigate('/music-result', { state: { data: response.data } });
+      } catch (error) {
+        console.error("에러:", error);
+        console.log(error['request']);
+        // Handle error if needed
+      }
+    };
 
-    return () => clearTimeout(timer); // 컴포넌트 언마운트 시 타이머 클리어
-  }, [navigate]);
+    fetchData();
+  }, [navigate, payload]); 
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-white">
