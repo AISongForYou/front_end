@@ -3,7 +3,7 @@ import { ArrowLeftIcon } from "@heroicons/react/20/solid";
 import InfoCard from "./infoCard"; // InfoCard 컴포넌트 임포트
 import NoticeAlert from "./noticeAlert"; // NoticeAlert 컴포넌트 임포트
 
-const Modal = ({ isOpen, onClose }) => {
+const Modal = ({ isOpen, onClose, data }) => {
   const [showAlert, setShowAlert] = useState(false);
 
   const handleAdClick = () => {
@@ -16,6 +16,14 @@ const Modal = ({ isOpen, onClose }) => {
   };
 
   if (!isOpen) return null;
+
+  const { title, description } = data?.songs?.[0] || {
+    title: "No Title",
+    description: "No Description",
+  };
+  const imageUrl = data?.image?.url || "https://via.placeholder.com/150";
+  const likes = 77;
+  const views = 777;
 
   return (
     <>
@@ -31,11 +39,11 @@ const Modal = ({ isOpen, onClose }) => {
           <div className="w-full h-full overflow-y-auto space-y-4">
             <div className="flex items-center space-x-4">
               <InfoCard
-                imageUrl="https://via.placeholder.com/150"
-                title="No빌런 헬스장"
-                description="Pop energetic dance"
-                likes={27}
-                views={80}
+                imageUrl={imageUrl}
+                title={title}
+                description={description}
+                likes={likes}
+                views={views}
               />
             </div>
             <button

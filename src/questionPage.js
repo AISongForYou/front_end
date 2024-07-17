@@ -5,11 +5,12 @@ import {
   ChevronRightIcon,
   ChevronDownIcon,
 } from "@heroicons/react/20/solid";
-import axios from 'axios'
+import axios from "axios";
 
 import RefuseAlert from "./components/refuseAlert";
 import TagSelector from "./components/tagSelector";
 import Toggle from "./components/toggle";
+import TabBar from "./components/tabBar";
 
 const questions = [
   {
@@ -119,7 +120,7 @@ function QuestionPage({ surveyData, setSurveyData }) {
       [questionId]: { answers, selectedTags },
     };
     setSurveyData(newSurveyData);
-  
+
     if (questionId < questions.length) {
       navigate(`/question/${questionId + 1}`);
     } else {
@@ -131,10 +132,12 @@ function QuestionPage({ surveyData, setSurveyData }) {
         emphasis: newSurveyData[2].answers[0],
         genre: newSurveyData[2].selectedTags.join(", "),
         imageStyle: newSurveyData[3].answers[0],
-        addPhrases: newSurveyData[3].answers[1]
+        addPhrases: newSurveyData[3].answers[1],
       };
-      console.log(payload)
-      navigate("/loading-page", { state: { surveyData: newSurveyData, payload } });
+      console.log(payload);
+      navigate("/loading-page", {
+        state: { surveyData: newSurveyData, payload },
+      });
     }
   };
 
@@ -147,97 +150,101 @@ function QuestionPage({ surveyData, setSurveyData }) {
   };
 
   return (
-    <div className="p-6 mt-20">
-      <button
-        onClick={handleBack}
-        className="flex items-center mb-4 text-blue-500"
-      >
-        <ArrowLeftIcon className="h-5 w-5 mr-2" aria-hidden="true" />
-        뒤로가기
-      </button>
-      <h1 className="text-xl font-bold  whitespace-pre-line mb-2">
-        {currentQuestion.text}
-      </h1>
-      <div className="pb-2">
-        {showAlert && <RefuseAlert message="모든 필수 항목을 입력해 주세요." />}
-      </div>
-      {questionId === 2 && (
-        <div className="App mb-4">
-          <TagSelector
-            selectedTags={selectedTags}
-            setSelectedTags={setSelectedTags}
-          />
+    <div className="flex flex-col h-screen pt-16 pb-16">
+      <div className="p-6 overflow-auto flex-grow">
+        <button
+          onClick={handleBack}
+          className="flex items-center mb-4 text-blue-500"
+        >
+          <ArrowLeftIcon className="h-5 w-5 mr-2" aria-hidden="true" />
+          뒤로가기
+        </button>
+        <h1 className="text-xl font-bold whitespace-pre-line mb-2">
+          {currentQuestion.text}
+        </h1>
+        <div className="pb-2">
+          {showAlert && (
+            <RefuseAlert message="모든 필수 항목을 입력해 주세요." />
+          )}
         </div>
-      )}
-      {currentQuestion.placeholders.map((placeholder, index) => (
-        <div key={index} className="mb-4">
-          <div className="flex items-center">
-            {!currentQuestion.required[index] && (
-              <div className="mb-2">
-                <Toggle
-                  label=""
-                  enabled={toggles[index]}
-                  setEnabled={(value) => handleToggleChange(index, value)}
-                />
+        {questionId === 2 && (
+          <div className="App mb-4">
+            <TagSelector
+              selectedTags={selectedTags}
+              setSelectedTags={setSelectedTags}
+            />
+          </div>
+        )}
+        {currentQuestion.placeholders.map((placeholder, index) => (
+          <div key={index} className="mb-4">
+            <div className="flex items-center">
+              {!currentQuestion.required[index] && (
+                <div className="mb-2">
+                  <Toggle
+                    label=""
+                    enabled={toggles[index]}
+                    setEnabled={(value) => handleToggleChange(index, value)}
+                  />
+                </div>
+              )}
+              <label className="block text-lg mb-2 ml-2">
+                {currentQuestion.titles[index]}
+              </label>
+            </div>
+            {toggles[index] && (
+              <textarea
+                value={answers[index] || ""}
+                onChange={(e) => handleChange(index, e.target.value)}
+                placeholder={placeholder}
+                className={`w-full p-3 text-base rounded-md border border-gray-300 bg-gray-600 text-white resize-none ${
+                  currentQuestion.required[index] ? "h-40" : "h-14"
+                }`}
+              />
+            )}
+          </div>
+        ))}
+        {currentQuestion.tips && (
+          <div className="mb-4">
+            <h2 className="text-lg mb-2 text-gray-500">
+              {currentQuestion.tipsTitle.map((tipstitle, index) => (
+                <h2 key={index}>{tipstitle}</h2>
+              ))}
+            </h2>
+            <ul className="list-disc list-inside text-gray-500 text-sm space-y-1">
+              {currentQuestion.tips.map((tip, index) => (
+                <li key={index}>{tip}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+        {currentQuestion.example && (
+          <div className="mb-4">
+            <button
+              onClick={() => setShowExample(!showExample)}
+              className="flex items-center text-blue-500"
+            >
+              {showExample ? (
+                <ChevronDownIcon className="h-5 w-5 mr-1" aria-hidden="true" />
+              ) : (
+                <ChevronRightIcon className="h-5 w-5 mr-1" aria-hidden="true" />
+              )}
+              예시 펼치기
+            </button>
+            {showExample && (
+              <div className="mt-2 p-2 border border-gray-300 rounded bg-gray-100 text-gray-600 text-sm leading-loose whitespace-pre-line">
+                <p>{currentQuestion.example}</p>
               </div>
             )}
-            <label className="block text-lg mb-2 ml-2">
-              {currentQuestion.titles[index]}
-            </label>
           </div>
-          {toggles[index] && (
-            <textarea
-              value={answers[index] || ""}
-              onChange={(e) => handleChange(index, e.target.value)}
-              placeholder={placeholder}
-              className={`w-full p-3 text-base rounded-md border border-gray-300 bg-gray-600 text-white resize-none ${
-                currentQuestion.required[index] ? "h-40" : "h-14"
-              }`}
-            />
-          )}
-        </div>
-      ))}
-      {currentQuestion.tips && (
-        <div className="mb-4">
-          <h2 className="text-lg mb-2 text-gray-500">
-            {currentQuestion.tipsTitle.map((tipstitle, index) => (
-              <h2 key={index}>{tipstitle}</h2>
-            ))}
-          </h2>
-          <ul className="list-disc list-inside text-gray-500 text-sm space-y-1">
-            {currentQuestion.tips.map((tip, index) => (
-              <li key={index}>{tip}</li>
-            ))}
-          </ul>
-        </div>
-      )}
-      {currentQuestion.example && (
-        <div className="mb-4">
+        )}
+        <div className="flex justify-end mt-6">
           <button
-            onClick={() => setShowExample(!showExample)}
-            className="flex items-center text-blue-500"
+            onClick={handleNext}
+            className="mt-6 py-2 px-4 text-lg text-white bg-blue-500 rounded-md"
           >
-            {showExample ? (
-              <ChevronDownIcon className="h-5 w-5 mr-1" aria-hidden="true" />
-            ) : (
-              <ChevronRightIcon className="h-5 w-5 mr-1" aria-hidden="true" />
-            )}
-            예시 펼치기
+            {questionId < questions.length ? "다음 질문 계속" : "제출"}
           </button>
-          {showExample && (
-            <div className="mt-2 p-2 border border-gray-300 rounded bg-gray-100 text-gray-600 text-sm leading-loose whitespace-pre-line">
-              <p>{currentQuestion.example}</p>
-            </div>
-          )}
         </div>
-      )}
-      <div className="flex justify-end mt-6">
-        <button
-          onClick={handleNext}
-          className="mt-6 py-2 px-4 text-lg text-white bg-blue-500 rounded-md"
-        >
-          {questionId < questions.length ? "다음 질문 계속" : "제출"}
-        </button>
       </div>
     </div>
   );

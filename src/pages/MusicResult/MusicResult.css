@@ -1,79 +1,109 @@
 /* MusicResult.css */
+@font-face {
+  font-family: 'KoPubDotumMedium';
+  src: url('../../fonts/KoPubDotumMedium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Jalnan2';
+  src: url('../../fonts/Jalnan2TTF.ttf') format('truetype');
+}
 
 .music-result {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    background-color: #f9f9f9;
-  }
-  
-  h2 {
-    font-size: 1.5rem;
-    color: #333;
-    margin-bottom: 20px;
-  }
-  
-  .song-details {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  .album-cover {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .album-cover img {
-    width: 500px; /* Increase the size of the album cover */
-    height: 500px; /* Increase the size of the album cover */
-    border-radius: 10px;
-  }
-  
-  .album-cover h3 {
-    font-size: 1.2rem;
-    color: #333;
-    margin: 10px 0;
-  }
-  
-  .play-button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    font-size: 1.5rem;
-    cursor: pointer;
-    margin-top: 10px;
-  }
-  
-  .lyrics-section {
-    background-color: white;
-    border-radius: 10px;
-    padding: 20px;
-    width: 80%;
-    max-width: 600px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    overflow-y: auto; /* Enable vertical scrolling */
-    max-height: 300px; /* Set a maximum height for the lyrics section */
-  }
-  
-  .lyrics-section p {
-    margin: 5px 0;
-    color: #333;
-  }
-  
-  .create-song-button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 1rem;
-    border-radius: 5px;
-    cursor: pointer;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  margin-top: 10px;
+}
+
+h2 {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.kopub {
+  font-family: 'KoPubDotumMedium', sans-serif;
+  color: gray;
+  margin: 10px 0;
+}
+
+.jalnan {
+  text-align: center;
+  font-family: 'Jalnan2', sans-serif;
+  font-size: 1em;
+  padding: 10px 30px;
+  color: #007bff;
+}
+
+.song-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.album-cover {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  align-items: center;
+}
+
+.album-cover img {
+  width: 500px;
+  /* Increase the size of the album cover */
+  height: 500px;
+  /* Increase the size of the album cover */
+  border-radius: 10px;
+}
+
+.album-cover h3 {
+  font-family: 'Jalnan2', sans-serif;
+  font-size: 1.2rem;
+  color: #333;
+  margin: 10px 0;
+}
+
+
+.play-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.lyrics-section {
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  width: 80%;
+  max-width: 600px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  /* Enable vertical scrolling */
+  max-height: 300px;
+  /* Set a maximum height for the lyrics section */
+}
+
+.lyrics-section p {
+  margin: 5px 0;
+  color: #333;
+}
+
+.create-song-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  border-radius: 5px;
+  cursor: pointer;
+}

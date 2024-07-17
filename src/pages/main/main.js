@@ -16,13 +16,15 @@ const MainContent = () => {
     <div className="no-scroll mt-11 p-4">
       <div className="section-container">
         <div>
-          <h2 className="text-gray-500">
+          <h2 className="text-gray-500 kopub">
             쉽고 빠른 맞춤형 AI 광고 음악 플랫폼
           </h2>
-          <h1 className="text-3xl font-bold mt-2">
+          <h1 className="text-2xl font-bold mt-2">
             당신의 비즈니스를 들려주세요
           </h1>
-          <h1 className="text-3xl font-bold text-blue-500 mt-1">AI 송포유</h1>
+          <h1 className="text-3xl text-blue-500 mt-1 jalnan text-left pl-0">
+            AI 송포유
+          </h1>
         </div>
       </div>
       <div className="section-container mt-8">
