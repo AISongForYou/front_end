@@ -6,10 +6,11 @@ const LoadingPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const payload = location.state?.payload;
-  const videoRef = useRef(null); // 비디오 요소에 접근하기 위한 ref
+  const videoRef = useRef(null);
 
   useEffect(() => {
     const fetchData = async () => {
+      console.log("Fetching data...");
       try {
         const response = await axios.post(
           "https://songforyou.azurewebsites.net/generate",
@@ -19,17 +20,16 @@ const LoadingPage = () => {
         navigate("/music-result", { state: { data: response.data } });
       } catch (error) {
         console.error("에러:", error);
-        console.log(error["request"]);
         // Handle error if needed
       }
     };
-
+  
     fetchData();
-  }, [navigate, payload]);
+  }, []); // 종속성 배열을 빈 배열로 설정
 
   useEffect(() => {
     if (videoRef.current) {
-      videoRef.current.volume = 0.3; // 볼륨을 50%로 설정
+      videoRef.current.volume = 0.3;
     }
   }, []);
 
@@ -38,7 +38,7 @@ const LoadingPage = () => {
       <div className="w-full max-w-lg">
         <div className="relative pb-9/16">
           <video
-            ref={videoRef} // ref를 비디오 요소에 설정
+            ref={videoRef}
             src={`${process.env.PUBLIC_URL}/loadingVideo.mp4`}
             className="absolute top-0 left-0 w-full h-full"
             controls

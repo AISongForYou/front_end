@@ -124,14 +124,13 @@ function QuestionPage({ surveyData, setSurveyData }) {
       navigate(`/question/${questionId + 1}`);
     } else {
       console.log("제출 데이터:", newSurveyData);
-      // Construct the payload
       const payload = {
-        product: newSurveyData[1].answers[1],
-        business: newSurveyData[1].answers[0],
-        emphasis: newSurveyData[2].answers[0],
-        genre: newSurveyData[2].selectedTags.join(", "),
-        imageStyle: newSurveyData[3].answers[0],
-        addPhrases: newSurveyData[3].answers[1],
+        product: newSurveyData[1]?.answers[1] || null,
+        business: newSurveyData[1]?.answers[0] || null,
+        emphasis: newSurveyData[2]?.answers[0] || null,
+        genre: newSurveyData[2]?.selectedTags.join(", ") || null,
+        imageStyle: newSurveyData[3]?.answers[0] || null,
+        addPhrases: newSurveyData[3]?.answers[1] || null,
       };
       console.log(payload);
       navigate("/loading-page", {
