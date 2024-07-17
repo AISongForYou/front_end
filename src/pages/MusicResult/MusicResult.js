@@ -29,7 +29,6 @@ const MusicResult = () => {
 
   return (
     <div className="music-result">
-      <h2>나만의 AI 작곡가가 만든 새로운 곡을 감상해보세요</h2>
       <div className="song-details">
         <div className="album-cover">
           <img src={imgUrl} alt="Album Cover" />
