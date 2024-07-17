@@ -54,13 +54,7 @@ const Modal = ({ isOpen, onClose, data }) => {
             </button>
             <div className="space-y-4">
               <div>
-                <div>
-                  <label className="block text-gray-700">버전</label>
-                  <select className="w-full mt-1 p-2 border border-gray-300 rounded-lg shadow-sm">
-                    <option>버전 1</option>
-                    <option>버전 2</option>
-                  </select>
-                </div>
+                {" "}
                 <label className="block text-gray-700">사업장 전화번호</label>
                 <input
                   type="text"

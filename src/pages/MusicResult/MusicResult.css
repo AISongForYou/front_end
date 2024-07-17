@@ -40,32 +40,31 @@ h2 {
 .songs-container {
   display: flex;
   justify-content: center;
-  /* 가운데 정렬 */
   width: 100%;
   flex-wrap: wrap;
 }
 
 .song-details {
-  display: flex;
-  flex-direction: column;
   align-items: center;
   margin-bottom: 20px;
-  flex: 1 1 300px;
   margin: 10px;
 }
 
 .album-cover {
-  display: flex;
-  flex-direction: column;
-  margin-top: 10px;
+  width: 100%;
+  max-width: 480px;
+  /* 고정 크기 설정 */
   align-items: center;
-  position: relative;
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .album-cover img {
   width: 100%;
-  max-width: 300px;
   height: auto;
+  /* 비율 유지 */
   border-radius: 10px;
 }
 
@@ -76,104 +75,11 @@ h2 {
   margin: 10px 0;
 }
 
-
 .album-cover h3 {
   font-family: 'Jalnan2', sans-serif;
   font-size: 1.2rem;
   color: #333;
   margin: 10px 0;
-}
-
-
-.play-button,
-.download-button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  padding: 10px 20px;
-  font-size: 1rem;
-  cursor: pointer;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.lyrics-section {
-  background-color: white;
-  border-radius: 10px;
-  padding: 20px;
-  width: 80%;
-  max-width: 600px;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  overflow-y: auto;
-  max-height: 300px;
-}
-
-.lyrics-section p {
-  margin: 5px;
-  color: #333;
-}
-
-.create-song-button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  font-size: 1.2rem;
-  border-radius: 5px;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  background-color: #f9f9f9;
-  margin-top: 60px;
-}
-
-.song-details {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 20px;
-  width: 100%;
-  height: 100%;
-  max-width: 600px;
-  max-height: 600px;
-}
-
-.album-cover {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.album-cover img {
-  width: 100%;
-  height: 250px;
-  max-width: 500px; /* 원하는 크기로 설정 */
-  max-height: 500px;
-  border-radius: 10px;
-}
-
-@font-face {
-  font-family: 'kopub';
-  src: url('../../fonts/KoPubDotumMedium.ttf') format('truetype');
-}
-
-.album-cover h3 {
-  font-family: 'kopub', sans-serif;
-  font-size: 1.5rem;
-  color: #333;
-  margin: 10px 0;
-  font-weight: bold;
 }
 
 .play-button,
@@ -197,10 +103,11 @@ h2 {
   padding: 20px;
   width: 100%;
   max-width: 480px;
-  margin-bottom: 10px;
+  /* 고정 크기 설정 */
+  margin-top: 20px;
+  margin-bottom: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
-  /* Enable vertical scrolling */
   max-height: 300px;
 }
 
@@ -221,86 +128,4 @@ h2 {
   border-radius: 5px;
   cursor: pointer;
   margin-top: 20px;
-}
-
-.song-title {
-  font-family: 'Jalnan2', sans-serif;
-  font-size: 1.2rem;
-  color: #333;
-  margin: 10px 0;
-}
-
-.songs-container {
-  display: flex;
-  justify-content: space-around;
-  width: 100%;
-  flex-wrap: wrap;
-  /* 화면 크기에 따라 요소를 감쌀 수 있도록 변경 */
-}
-
-.song-details {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 20px;
-  flex: 1 1 300px;
-  /* 각 요소가 300px 이상 크기를 가지며 flex 컨테이너 내에서 균등하게 분배 */
-  margin: 10px;
-}
-
-.album-cover {
-  display: flex;
-  flex-direction: column;
-  margin-top: 10px;
-  align-items: center;
-  position: relative;
-}
-
-
-.song-title {
-  font-family: 'Jalnan2', sans-serif;
-  font-size: 1.2rem;
-  color: #333;
-  margin: 10px 0;
-}
-
-.song-title {
-  font-family: 'Jalnan2', sans-serif;
-  font-size: 1.2rem;
-  color: #333;
-  margin: 10px 0;
-}
-
-.songs-container {
-  display: flex;
-  justify-content: space-around;
-  width: 100%;
-  flex-wrap: wrap;
-  /* 화면 크기에 따라 요소를 감쌀 수 있도록 변경 */
-}
-
-.song-details {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 20px;
-  flex: 1 1 300px;
-  /* 각 요소가 300px 이상 크기를 가지며 flex 컨테이너 내에서 균등하게 분배 */
-  margin: 10px;
-}
-
-.album-cover {
-  display: flex;
-  flex-direction: column;
-  margin-top: 10px;
-  align-items: center;
-  position: relative;
-}
-
-
-.song-title {
-  font-family: 'Jalnan2', sans-serif;
-  font-size: 1.2rem;
-  color: #333;
-  margin: 10px 0;
 }
