@@ -5,7 +5,6 @@ import {
   ChevronRightIcon,
   ChevronDownIcon,
 } from "@heroicons/react/20/solid";
-import axios from "axios";
 
 import RefuseAlert from "./components/refuseAlert";
 import TagSelector from "./components/tagSelector";

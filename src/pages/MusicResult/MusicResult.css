@@ -37,11 +37,21 @@ h2 {
   color: #007bff;
 }
 
+.songs-container {
+  display: flex;
+  justify-content: center;
+  /* 가운데 정렬 */
+  width: 100%;
+  flex-wrap: wrap;
+}
+
 .song-details {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-bottom: 20px;
+  flex: 1 1 300px;
+  margin: 10px;
 }
 
 .album-cover {
@@ -49,15 +59,23 @@ h2 {
   flex-direction: column;
   margin-top: 10px;
   align-items: center;
+  position: relative;
 }
 
 .album-cover img {
-  width: 500px;
-  /* Increase the size of the album cover */
-  height: 500px;
-  /* Increase the size of the album cover */
+  width: 100%;
+  max-width: 300px;
+  height: auto;
   border-radius: 10px;
 }
+
+.song-title {
+  font-family: 'Jalnan2', sans-serif;
+  font-size: 1.2rem;
+  color: #333;
+  margin: 10px 0;
+}
+
 
 .album-cover h3 {
   font-family: 'Jalnan2', sans-serif;
@@ -67,16 +85,19 @@ h2 {
 }
 
 
-.play-button {
+.play-button,
+.download-button {
   background-color: #007bff;
   color: white;
   border: none;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  font-size: 1.5rem;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 1rem;
   cursor: pointer;
-  margin-top: 10px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .lyrics-section {
@@ -85,16 +106,15 @@ h2 {
   padding: 20px;
   width: 80%;
   max-width: 600px;
+  margin-top: 20px;
   margin-bottom: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
-  /* Enable vertical scrolling */
   max-height: 300px;
-  /* Set a maximum height for the lyrics section */
 }
 
 .lyrics-section p {
-  margin: 5px 0;
+  margin: 5px;
   color: #333;
 }
 
@@ -106,4 +126,45 @@ h2 {
   font-size: 1.2rem;
   border-radius: 5px;
   cursor: pointer;
+}
+
+.song-title {
+  font-family: 'Jalnan2', sans-serif;
+  font-size: 1.2rem;
+  color: #333;
+  margin: 10px 0;
+}
+
+.songs-container {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  flex-wrap: wrap;
+  /* 화면 크기에 따라 요소를 감쌀 수 있도록 변경 */
+}
+
+.song-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+  flex: 1 1 300px;
+  /* 각 요소가 300px 이상 크기를 가지며 flex 컨테이너 내에서 균등하게 분배 */
+  margin: 10px;
+}
+
+.album-cover {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  align-items: center;
+  position: relative;
+}
+
+
+.song-title {
+  font-family: 'Jalnan2', sans-serif;
+  font-size: 1.2rem;
+  color: #333;
+  margin: 10px 0;
 }
