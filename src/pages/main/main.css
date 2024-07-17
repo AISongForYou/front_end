@@ -1,4 +1,13 @@
-/* main.css */
+@font-face {
+  font-family: 'KoPubDotumMedium';
+  src: url('/src/fonts/KoPubDotumMedium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Jalnan2';
+  src: url('/src/fonts/Jalnan2TTF.ttf') format('truetype');
+}
+
 
 body,
 html {
@@ -17,15 +26,24 @@ html {
   padding: 20px;
 }
 
-h2 {
+
+h1 {
+  font-family: 'KoPubDotumMedium', sans-serif;
+  margin: 5px 0;
+  font-size: 2em;
+  /* 기본 글씨 크기 */
+}
+
+.kopub {
+  font-family: 'KoPubDotumMedium', sans-serif;
   color: gray;
   margin: 10px 0;
 }
 
-h1 {
-  margin: 5px 0;
-  font-size: 2em;
-  /* 기본 글씨 크기 */
+.jalnan {
+  font-family: 'Jalnan2', sans-serif;
+  font-size: 2.5em;
+  color: #007bff;
 }
 
 .highlight {
@@ -202,4 +220,10 @@ h1.note {
   max-width: 1040px;
   margin-left: auto;
   margin-right: auto;
+}
+
+.no-scroll {
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
 }

@@ -1,16 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import './App.css';
-import MainContent from './pages/main/main';
-import Navbar from './components/Navbar/Navbar';
-import MusicResult from './pages/MusicResult/MusicResult';
+import React, { useState, useEffect } from "react";
+import "./App.css";
+import MainContent from "./pages/main/main";
+import Navbar from "./components/Navbar/Navbar";
+import MusicResult from "./pages/MusicResult/MusicResult";
 import QuestionPage from "./questionPage";
 import LoadingPage from "./loadingPage";
 import AdSelectPage from "./pages/ad/adSelect";
 import AiRingoPage from "./pages/ad/aiRingo";
 import "tailwindcss/tailwind.css";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+  useLocation,
+} from "react-router-dom";
+import TabBar from "./components/tabBar";
 
-function App() {
+function AppContent() {
   const [showText, setShowText] = useState(true);
   const [surveyData, setSurveyData] = useState({});
   const [resultData, setResultData] = useState(null);
@@ -23,20 +30,30 @@ function App() {
     return () => clearTimeout(textTimer);
   }, []);
 
+  const location = useLocation();
+  const isMainPage = location.pathname === "/";
+
   return (
-    <Router>
-      <div className="App no-scroll">
-        {showText ? (
-          <header className="App-header">
-            <h1 className="fade-in-text">당신의 비즈니스를 들려주세요</h1>
-            <h1 className="slide-up-text">AI송포유</h1>
-          </header>
-        ) : (
-          <>
-            <Navbar />
+    <div
+      className={`flex flex-col h-screen ${
+        isMainPage ? "overflow-hidden" : "overflow-auto"
+      }`}
+    >
+      {showText ? (
+        <header className="App-header">
+          <h1 className="fade-in-text">당신의 비즈니스를 들려주세요</h1>
+          <h1 className="slide-up-text">AI송포유</h1>
+        </header>
+      ) : (
+        <>
+          <Navbar />
+          <div className="flex-grow">
             <Routes>
               <Route path="/" element={<MainContent />} />
-              <Route path="/music-result" element={<MusicResult data={resultData} />} />
+              <Route
+                path="/music-result"
+                element={<MusicResult data={resultData} />}
+              />
               <Route path="/" element={<Navigate to="/question/1" />} />
               <Route
                 path="/question/:id"
@@ -51,9 +68,18 @@ function App() {
               <Route path="/" element={<Navigate to="/question/1" />} />
               <Route path="/adSelect-page" element={<AdSelectPage />} />
             </Routes>
-          </>
-        )}
-      </div>
+          </div>
+          <TabBar />
+        </>
+      )}
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <AppContent />
     </Router>
   );
 }
