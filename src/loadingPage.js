@@ -29,7 +29,7 @@ const LoadingPage = () => {
 
   useEffect(() => {
     if (videoRef.current) {
-      videoRef.current.volume = 0.4; // 볼륨을 50%로 설정
+      videoRef.current.volume = 0.3; // 볼륨을 50%로 설정
     }
   }, []);
 

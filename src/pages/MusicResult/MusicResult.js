@@ -8,11 +8,11 @@ const MusicResult = () => {
   const initialData =
     location.state?.data || JSON.parse(localStorage.getItem("musicData")) || {};
   const [data, setData] = useState(initialData);
-  const song = data?.songs?.[0];
+  const songs = data?.songs || [];
   const imgUrl = data?.image?.url;
 
-  const [audio, setAudio] = useState(null);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [audios, setAudios] = useState([]);
+  const [isPlaying, setIsPlaying] = useState(Array(songs.length).fill(false));
 
   useEffect(() => {
     if (location.state?.data) {
@@ -22,16 +22,23 @@ const MusicResult = () => {
   }, [location.state]);
 
   useEffect(() => {
-    if (song) {
+    const audioElements = songs.map((song) => {
       const audioElement = new Audio(song.url);
-      audioElement.addEventListener("ended", () => setIsPlaying(false));
-      setAudio(audioElement);
-    }
-  }, [song]);
+      audioElement.addEventListener("ended", () => {
+        setIsPlaying((prev) =>
+          prev.map((playing, index) =>
+            audios[index] === audioElement ? false : playing
+          )
+        );
+      });
+      return audioElement;
+    });
+    setAudios(audioElements);
+  }, [songs]);
 
   useEffect(() => {
     const handleBeforeUnload = (event) => {
-      if (isPlaying) {
+      if (isPlaying.some((playing) => playing)) {
         event.preventDefault();
         event.returnValue = "";
         return "";
@@ -45,24 +52,32 @@ const MusicResult = () => {
     };
   }, [isPlaying]);
 
-  const togglePlayPause = () => {
-    if (isPlaying) {
-      audio.pause();
+  const togglePlayPause = (index) => {
+    if (isPlaying[index]) {
+      audios[index].pause();
     } else {
-      audio.play();
+      audios[index].play();
     }
-    setIsPlaying(!isPlaying);
+    setIsPlaying((prev) =>
+      prev.map((playing, i) => (i === index ? !playing : playing))
+    );
   };
 
   const handleNavigation = (path) => {
-    if (isPlaying) {
-      // if (window.confirm("음악이 재생 중입니다. 이동하시겠습니까?")) {
-      //   audio.pause();
-      //   setIsPlaying(false);
+    if (isPlaying.some((playing) => playing)) {
       navigate(path);
     } else {
       navigate(path);
     }
+  };
+
+  const handleDownload = (song) => {
+    const link = document.createElement("a");
+    link.href = `https://cdn1.suno.ai/${song.id}.mp3`;
+    link.download = `${song.title}.mp3`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   if (!data?.songs) {
@@ -77,18 +92,33 @@ const MusicResult = () => {
             <h2 className="jalnan">
               나만의 AI 작곡가가 만든 새로운 곡을 감상해보세요!
             </h2>
-            <div className="song-details">
-              <div className="album-cover">
-                <img src={imgUrl} alt="Album Cover" />
-                <h3 className="jalnan2">{song.title}</h3>
-                <button className="play-button" onClick={togglePlayPause}>
-                  {isPlaying ? "⏸" : "▶"}
-                </button>
-              </div>
+            <h1 className="song-title">제목: {songs[0].title}</h1>
+            <div className="songs-container">
+              {songs.map((song, index) => (
+                <div key={song.id} className="song-details">
+                  <div className="album-cover relative">
+                    <img src={imgUrl} alt="Album Cover" />
+                    <h3 className="jalnan2">{`버전 ${index + 1}`}</h3>
+                    <div className="flex space-x-4 mt-4">
+                      <button
+                        className="play-button"
+                        onClick={() => togglePlayPause(index)}
+                      >
+                        {isPlaying[index] ? "⏸" : "▶"}
+                      </button>
+                      <button
+                        onClick={() => handleDownload(song)}
+                        className="download-button"
+                      >
+                        다운로드
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
-
             <div className="lyrics-section">
-              <pre>{song.lyric}</pre>
+              <pre>{songs[0].lyric}</pre>
             </div>
             <button
               className="create-song-button"
