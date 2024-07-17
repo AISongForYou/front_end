@@ -31,17 +31,17 @@ const MainContent = () => {
           <div>
             <MusicPlayer
               cover="./song1_cover.png"
-              song="/path/to/song1.mp3"
-              title="첫 번째 곡"
-              artist="태형"
+              song="./100_.mp4"
+              title="미라클 100"
+              artist="pop electronic"
             />
           </div>
           <div>
             <MusicPlayer
               cover="./song2_cover.png"
-              song="/path/to/song2.mp3"
-              title="두 번째 곡"
-              artist="Artist Name"
+              song="./AI_.mp4"
+              title="AI 송포유"
+              artist="playful pop rhythmic"
             />
           </div>
         </div>
