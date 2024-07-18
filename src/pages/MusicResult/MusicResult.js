@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import NavTabs from "../../components/NavTabs/navTabs.js";
 import Slider from "react-slick";
+import NavTabs from "../../components/NavTabs/navTabs.js";
 import "./MusicResult.css";
 
 const MusicResult = ({ isPlaying, stopAllAudios, setIsPlaying }) => {
@@ -16,6 +16,7 @@ const MusicResult = ({ isPlaying, stopAllAudios, setIsPlaying }) => {
   const [isPlayingState, setIsPlayingState] = useState(
     Array(songs.length).fill(false)
   );
+
   const [activeTab, setActiveTab] = useState(0);
 
   useEffect(() => {
@@ -98,7 +99,7 @@ const MusicResult = ({ isPlaying, stopAllAudios, setIsPlaying }) => {
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", `${song.title}.mp4`);
+      link.setAttribute("download", `${song.title}.mp3`);
       document.body.appendChild(link);
       link.click();
       link.parentNode.removeChild(link);
@@ -106,6 +107,7 @@ const MusicResult = ({ isPlaying, stopAllAudios, setIsPlaying }) => {
     } catch (error) {
       console.error("Error downloading the file", error);
     }
+  };
 
   const handleTabChange = (index) => {
     if (isPlayingState.some((playing) => playing)) {
@@ -121,16 +123,6 @@ const MusicResult = ({ isPlaying, stopAllAudios, setIsPlaying }) => {
       setActiveTab(index);
     }
   };
-
-  const handleDownload = (song) => {
-    const link = document.createElement("a");
-    link.href = `https://cdn1.suno.ai/${song.id}.mp3`;
-    link.setAttribute("download", `${song.title}.mp3`);
-    link.style.display = "none";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-
 
   if (!data?.songs) {
     return <div>Loading...</div>; // 또는 적절한 대체 UI
@@ -152,20 +144,15 @@ const MusicResult = ({ isPlaying, stopAllAudios, setIsPlaying }) => {
             <h2 className="jalnan">
               나만의 AI 작곡가가 만든 새로운 곡을 감상해보세요!
             </h2>
-            <h1 className="song-title">제목: {songs[0].title}</h1>
+            <h1 className="song-title">제목: {songs[0]?.title}</h1>
             <NavTabs
               activeTab={activeTab}
               setActiveTab={setActiveTab}
               onTabChange={handleTabChange}
             />
-            <div className="songs-container">
+            <Slider {...sliderSettings}>
               {songs.map((song, index) => (
-                <div
-                  key={song.id}
-                  className={`song-details ${
-                    activeTab === index ? "block" : "hidden"
-                  }`}
-                >
+                <div key={song.id} className="song-details">
                   <div className="album-cover relative">
                     <img src={song.imgUrl} alt="Album Cover" />
                     <div className="flex space-x-4 mt-4">
@@ -188,8 +175,7 @@ const MusicResult = ({ isPlaying, stopAllAudios, setIsPlaying }) => {
                   </div>
                 </div>
               ))}
-            </div>
-
+            </Slider>
             <button
               className="create-song-button"
               onClick={() => handleNavigation("/adSelect-page")}
