@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import Slider from "react-slick";
 import NavTabs from "../../components/NavTabs/navTabs.js";
 import "./MusicResult.css";
 
@@ -11,12 +10,12 @@ const MusicResult = ({ isPlaying, stopAllAudios, setIsPlaying }) => {
     location.state?.data || JSON.parse(localStorage.getItem("musicData")) || {};
   const [data, setData] = useState(initialData);
   const songs = data?.songs || [];
+  const imgUrl = data?.image?.url;
 
   const [audios, setAudios] = useState([]);
   const [isPlayingState, setIsPlayingState] = useState(
     Array(songs.length).fill(false)
   );
-
   const [activeTab, setActiveTab] = useState(0);
 
   useEffect(() => {
@@ -92,6 +91,21 @@ const MusicResult = ({ isPlaying, stopAllAudios, setIsPlaying }) => {
     }
   };
 
+  const handleTabChange = (index) => {
+    if (isPlayingState.some((playing) => playing)) {
+      const confirmTabChange = window.confirm(
+        "탭을 변경하면 노래가 중지됩니다. 계속하시겠습니까?"
+      );
+      if (confirmTabChange) {
+        audios.forEach((audio) => audio.pause());
+        setIsPlayingState(Array(songs.length).fill(false));
+        setActiveTab(index);
+      }
+    } else {
+      setActiveTab(index);
+    }
+  };
+
   const handleDownload = async (song) => {
     try {
       const response = await fetch(song.url);
@@ -109,32 +123,9 @@ const MusicResult = ({ isPlaying, stopAllAudios, setIsPlaying }) => {
     }
   };
 
-  const handleTabChange = (index) => {
-    if (isPlayingState.some((playing) => playing)) {
-      const confirmTabChange = window.confirm(
-        "탭을 변경하면 노래가 중지됩니다. 계속하시겠습니까?"
-      );
-      if (confirmTabChange) {
-        audios.forEach((audio) => audio.pause());
-        setIsPlayingState(Array(songs.length).fill(false));
-        setActiveTab(index);
-      }
-    } else {
-      setActiveTab(index);
-    }
-  };
-
   if (!data?.songs) {
     return <div>Loading...</div>; // 또는 적절한 대체 UI
   }
-
-  const sliderSettings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-  };
 
   return (
     <div className="bg-gray">
@@ -144,15 +135,20 @@ const MusicResult = ({ isPlaying, stopAllAudios, setIsPlaying }) => {
             <h2 className="jalnan">
               나만의 AI 작곡가가 만든 새로운 곡을 감상해보세요!
             </h2>
-            <h1 className="song-title">제목: {songs[0]?.title}</h1>
+            <h1 className="song-title">제목: {songs[0].title}</h1>
             <NavTabs
               activeTab={activeTab}
               setActiveTab={setActiveTab}
               onTabChange={handleTabChange}
             />
-            <Slider {...sliderSettings}>
+            <div className="songs-container">
               {songs.map((song, index) => (
-                <div key={song.id} className="song-details">
+                <div
+                  key={song.id}
+                  className={`song-details ${
+                    activeTab === index ? "block" : "hidden"
+                  }`}
+                >
                   <div className="album-cover relative">
                     <img src={song.imgUrl} alt="Album Cover" />
                     <div className="flex space-x-4 mt-4">
@@ -175,7 +171,8 @@ const MusicResult = ({ isPlaying, stopAllAudios, setIsPlaying }) => {
                   </div>
                 </div>
               ))}
-            </Slider>
+            </div>
+
             <button
               className="create-song-button"
               onClick={() => handleNavigation("/adSelect-page")}
