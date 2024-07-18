@@ -32,7 +32,7 @@ const MainContent = () => {
         <div>
           <div>
             <MusicPlayer
-              cover="./song1_cover.png"
+              cover="./main2_.png"
               song="./100_.mp4"
               title="미라클 100"
               artist="pop electronic"
@@ -40,7 +40,7 @@ const MainContent = () => {
           </div>
           <div>
             <MusicPlayer
-              cover="./song2_cover.png"
+              cover="./main1_.png"
               song="./AI_.mp4"
               title="AI 송포유"
               artist="playful pop rhythmic"
