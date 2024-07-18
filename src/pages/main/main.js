@@ -1,15 +1,40 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, Routes, Route } from "react-router-dom";
 import "./main.css";
 import MusicPlayer from "../MusicPlayer/MusicPlayer.js";
 import PromoSection from "../../components/PromoSection/promoSection.js";
 import TabBar from "../../components/tabBar.js";
+import MusicResult from "../MusicResult/MusicResult.js";
 
 const MainContent = () => {
   const navigate = useNavigate();
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [audios, setAudios] = useState([]);
+
+  useEffect(() => {
+    const audioElements = [new Audio("./100_.mp4"), new Audio("./AI_.mp4")];
+    setAudios(audioElements);
+  }, []);
 
   const handleStartClick = () => {
     navigate("/question/1"); // 첫 번째 질문 페이지로 이동
+  };
+
+  const togglePlayPause = (index) => {
+    setIsPlaying((prev) => {
+      if (prev) {
+        audios.forEach((audio) => audio.pause());
+        return false;
+      } else {
+        audios[index].play();
+        return true;
+      }
+    });
+  };
+
+  const stopAllAudios = () => {
+    audios.forEach((audio) => audio.pause());
+    setIsPlaying(false);
   };
 
   return (
@@ -36,6 +61,7 @@ const MainContent = () => {
               song="./100_.mp4"
               title="미라클 100"
               artist="pop electronic"
+              onPlayPause={() => togglePlayPause(0)}
             />
           </div>
           <div>
@@ -44,12 +70,22 @@ const MainContent = () => {
               song="./AI_.mp4"
               title="AI 송포유"
               artist="playful pop rhythmic"
+              onPlayPause={() => togglePlayPause(1)}
             />
           </div>
         </div>
       </div>
       <PromoSection onClick={handleStartClick} />
-      <TabBar />
+      <TabBar isPlaying={isPlaying} stopAllAudios={stopAllAudios} />
+      <Routes>
+        <Route
+          path="/result"
+          element={
+            <MusicResult isPlaying={isPlaying} stopAllAudios={stopAllAudios} />
+          }
+        />
+        {/* 다른 라우트들도 추가할 수 있습니다 */}
+      </Routes>
     </div>
   );
 };

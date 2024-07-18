@@ -148,7 +148,7 @@ function QuestionPage({ surveyData, setSurveyData }) {
   };
 
   return (
-    <div className="flex flex-col h-screen pt-16 pb-16">
+    <div className="flex flex-col h-screen pt-16 pb-4">
       <div className="p-6 overflow-auto flex-grow">
         <button
           onClick={handleBack}

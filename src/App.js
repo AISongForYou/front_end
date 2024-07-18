@@ -6,7 +6,6 @@ import MusicResult from "./pages/MusicResult/MusicResult";
 import QuestionPage from "./questionPage";
 import LoadingPage from "./loadingPage";
 import AdSelectPage from "./pages/ad/adSelect";
-import AiRingoPage from "./pages/ad/aiRingo";
 import "tailwindcss/tailwind.css";
 import {
   BrowserRouter as Router,
@@ -21,6 +20,11 @@ function AppContent() {
   const [showText, setShowText] = useState(true);
   const [surveyData, setSurveyData] = useState({});
   const [resultData, setResultData] = useState(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const stopAllAudios = () => {
+    setIsPlaying(false);
+  };
 
   useEffect(() => {
     const textTimer = setTimeout(() => {
@@ -32,6 +36,7 @@ function AppContent() {
 
   const location = useLocation();
   const isMainPage = location.pathname === "/";
+  const isQuestionPage = location.pathname.startsWith("/question");
 
   return (
     <div
@@ -52,7 +57,14 @@ function AppContent() {
               <Route path="/" element={<MainContent />} />
               <Route
                 path="/music-result"
-                element={<MusicResult data={resultData} />}
+                element={
+                  <MusicResult
+                    data={resultData}
+                    isPlaying={isPlaying}
+                    stopAllAudios={stopAllAudios}
+                    setIsPlaying={setIsPlaying}
+                  />
+                }
               />
               <Route path="/" element={<Navigate to="/question/1" />} />
               <Route
@@ -69,7 +81,9 @@ function AppContent() {
               <Route path="/adSelect-page" element={<AdSelectPage />} />
             </Routes>
           </div>
-          <TabBar />
+          {!isQuestionPage && (
+            <TabBar isPlaying={isPlaying} stopAllAudios={stopAllAudios} />
+          )}
         </>
       )}
     </div>
