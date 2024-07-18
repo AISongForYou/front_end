@@ -10,7 +10,6 @@ const MusicResult = () => {
     location.state?.data || JSON.parse(localStorage.getItem("musicData")) || {};
   const [data, setData] = useState(initialData);
   const songs = data?.songs || [];
-  const imgUrl = data?.image?.url;
 
   const [audios, setAudios] = useState([]);
   const [isPlaying, setIsPlaying] = useState(Array(songs.length).fill(false));
@@ -130,7 +129,7 @@ const MusicResult = () => {
                   }`}
                 >
                   <div className="album-cover relative">
-                    <img src={imgUrl} alt="Album Cover" />
+                    <img src={song.imgUrl} alt="Album Cover" />
                     <div className="flex space-x-4 mt-4">
                       <button
                         className="play-button"
