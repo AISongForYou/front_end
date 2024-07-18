@@ -80,15 +80,32 @@ const MusicResult = () => {
     }
   };
 
-  const handleDownload = (song) => {
-    const link = document.createElement("a");
-    link.href = `https://cdn1.suno.ai/${song.id}.mp3`;
-    link.setAttribute("download", `${song.title}.mp3`);
-    link.style.display = "none";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+
+  const handleDownload = async (song) => {
+    try {
+      const response = await fetch(song.url);
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", `${song.title}.mp4`);
+      document.body.appendChild(link);
+      link.click();
+      link.parentNode.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Error downloading the file", error);
+    }
   };
+  // const handleDownload = (song) => {
+  //   const link = document.createElement("a");
+  //   link.href = `https://cdn1.suno.ai/${song.id}.mp3`;
+  //   link.setAttribute("download", `${song.title}.mp3`);
+  //   link.style.display = "none";
+  //   document.body.appendChild(link);
+  //   link.click();
+  //   document.body.removeChild(link);
+  // };
 
   if (!data?.songs) {
     return <div>Loading...</div>; // 또는 적절한 대체 UI

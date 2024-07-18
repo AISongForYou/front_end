@@ -3,6 +3,7 @@ import './MusicPlayer.css';
 
 const MusicPlayer = ({ cover, song, title, artist }) => {
   const [isPlaying, setIsPlaying] = useState(false);
+  const [showDownloadBox, setShowDownloadBox] = useState(false);
   const audioRef = useRef(null);
 
   const handlePlayPause = () => {
@@ -12,6 +13,20 @@ const MusicPlayer = ({ cover, song, title, artist }) => {
       audioRef.current.play();
     }
     setIsPlaying(!isPlaying);
+  };
+
+  const handleDownload = async () => {
+    try {
+      const response = await fetch(song);
+      const blob = await response.blob();
+      const link = document.createElement("a");
+      link.href = window.URL.createObjectURL(blob);
+      link.download = `${title}.mp4`;
+      link.click();
+      window.URL.revokeObjectURL(link.href); // Clean up after the download
+    } catch (error) {
+      console.error("Download error:", error);
+    }
   };
 
   return (
@@ -27,7 +42,12 @@ const MusicPlayer = ({ cover, song, title, artist }) => {
         <button className="control-button" onClick={handlePlayPause}>
           {isPlaying ? '❚❚' : '▶'}
         </button>
-        <button className="control-button">⋮</button>
+        <button className="control-button" onClick={() => setShowDownloadBox(!showDownloadBox)}>⋮</button>
+        {showDownloadBox && (
+          <div className="download-box">
+            <button className="download-button" onClick={handleDownload}>다운로드</button>
+          </div>
+        )}
       </div>
       <audio ref={audioRef} src={song}></audio>
     </div>
