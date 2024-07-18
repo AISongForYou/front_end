@@ -3,7 +3,7 @@ import { ArrowLeftIcon } from "@heroicons/react/20/solid";
 import InfoCard from "./infoCard"; // InfoCard 컴포넌트 임포트
 import NoticeAlert from "./noticeAlert"; // NoticeAlert 컴포넌트 임포트
 
-const Modal = ({ isOpen, onClose, data }) => {
+const Modal = ({ isOpen, onClose, data, activeTab }) => {
   const [showAlert, setShowAlert] = useState(false);
 
   const handleAdClick = () => {
@@ -16,12 +16,13 @@ const Modal = ({ isOpen, onClose, data }) => {
   };
 
   if (!isOpen) return null;
-
-  const { title, description } = data?.songs?.[0] || {
-    title: "No Title",
-    description: "No Description",
-  };
-  const imageUrl = data?.image?.url || "https://via.placeholder.com/150";
+  console.log("ActiveTab in Modal:", activeTab); // 디버그를 위해 콘솔 출력
+  const song = data?.songs?.[activeTab] || {};
+  const {
+    title = "No Title",
+    description = "No Description",
+    imgUrl = "https://via.placeholder.com/150",
+  } = song;
   const likes = 77;
   const views = 777;
 
@@ -39,7 +40,7 @@ const Modal = ({ isOpen, onClose, data }) => {
           <div className="w-full h-full overflow-y-auto space-y-4">
             <div className="flex items-center space-x-4">
               <InfoCard
-                imageUrl={imageUrl}
+                imgUrl={imgUrl}
                 title={title}
                 description={description}
                 likes={likes}

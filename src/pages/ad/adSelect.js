@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import TabBar from "../../components/tabBar";
 import { ArrowLeftIcon } from "@heroicons/react/20/solid";
@@ -40,6 +40,14 @@ const AdSelectPage = () => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
+
+  const [activeTab, setActiveTab] = useState(0);
+  useEffect(() => {
+    const storedActiveTab = JSON.parse(localStorage.getItem("activeTab"));
+    if (storedActiveTab !== null) {
+      setActiveTab(storedActiveTab);
+    }
+  }, []);
 
   const handleAlertClose = () => {
     setAlert({ show: false, message: "", color: "green", icon: null });
@@ -100,7 +108,12 @@ const AdSelectPage = () => {
         </div>
 
         {/* Modal 영역 */}
-        <Modal isOpen={isModalOpen} onClose={closeModal} data={modalData} />
+        <Modal
+          isOpen={isModalOpen}
+          onClose={closeModal}
+          data={modalData}
+          activeTab={activeTab}
+        />
 
         {/* NoticeAlert 영역 */}
         {alert.show && (

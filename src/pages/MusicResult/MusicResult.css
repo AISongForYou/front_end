@@ -19,7 +19,7 @@
 h2 {
   font-size: 1.2rem;
   color: #333;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .kopub {
@@ -47,12 +47,18 @@ h2 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 4px;
+}
+
+.album-cover-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
 .album-cover {
-  width: 100%;
-  max-width: 480px;
+  width: 80%;
+  max-width: 300px;
   align-items: center;
   background: #fff;
   padding: 20px;
@@ -64,13 +70,13 @@ h2 {
   width: 100%;
   height: auto;
   border-radius: 10px;
+  align-items: center;
 }
 
 .song-title {
   font-family: 'Jalnan2', sans-serif;
   font-size: 1.2rem;
   color: #333;
-  margin: 10px 0;
 }
 
 .play-button,
@@ -88,17 +94,30 @@ h2 {
   justify-content: center;
 }
 
+.album-cover-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.lyrics-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
 .lyrics-section {
   background-color: white;
   border-radius: 10px;
   padding: 20px;
-  width: 100%;
-  max-width: 480px;
+  width: 80%;
+  max-width: 300px;
   margin-top: 20px;
   margin-bottom: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
-  max-height: 180px;
+  max-height: 140px;
+  align-items: center;
 }
 
 .lyrics-section pre {
@@ -117,5 +136,5 @@ h2 {
   font-size: 1rem;
   border-radius: 5px;
   cursor: pointer;
-  margin-top: 20px;
+  margin-top: 5px;
 }

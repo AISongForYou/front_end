@@ -1,9 +1,9 @@
 import React from "react";
 
-const InfoCard = ({ imageUrl, title, description, likes, views }) => {
+const InfoCard = ({ imgUrl, title, description, likes, views }) => {
   return (
     <div className="flex items-center space-x-4">
-      <img src={imageUrl} alt="광고 이미지" className="w-20 h-20 rounded-lg" />
+      <img src={imgUrl} alt="광고 이미지" className="w-20 h-20 rounded-lg" />
       <div>
         <h2 className="text-xl font-bold">{title}</h2>
         <p className="text-sm text-gray-500">{description}</p>

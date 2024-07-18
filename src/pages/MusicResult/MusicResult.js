@@ -10,7 +10,6 @@ const MusicResult = ({ isPlaying, stopAllAudios, setIsPlaying }) => {
     location.state?.data || JSON.parse(localStorage.getItem("musicData")) || {};
   const [data, setData] = useState(initialData);
   const songs = data?.songs || [];
-  const imgUrl = data?.image?.url;
 
   const [audios, setAudios] = useState([]);
   const [isPlayingState, setIsPlayingState] = useState(
@@ -76,7 +75,8 @@ const MusicResult = ({ isPlaying, stopAllAudios, setIsPlaying }) => {
     );
   };
 
-  const handleNavigation = (path) => {
+  const handleNavigation = (path, index) => {
+    localStorage.setItem("activeTab", JSON.stringify(index)); // activeTab 상태 저장
     if (isPlayingState.some((playing) => playing)) {
       const confirmNavigation = window.confirm(
         "페이지를 이동하면 노래가 중지됩니다. 계속하시겠습니까?"
@@ -84,9 +84,11 @@ const MusicResult = ({ isPlaying, stopAllAudios, setIsPlaying }) => {
       if (confirmNavigation) {
         audios.forEach((audio) => audio.pause());
         setIsPlayingState(Array(songs.length).fill(false));
+        setActiveTab(index);
         navigate(path);
       }
     } else {
+      setActiveTab(index);
       navigate(path);
     }
   };
@@ -127,9 +129,11 @@ const MusicResult = ({ isPlaying, stopAllAudios, setIsPlaying }) => {
     return <div>Loading...</div>; // 또는 적절한 대체 UI
   }
 
+  console.log(activeTab);
+
   return (
     <div className="bg-gray">
-      <div className="flex flex-col h-screen pt-16 pb-16">
+      <div className="flex flex-col h-screen pt-4 pb-16">
         <div className="p-6 overflow-auto flex-grow">
           <div className="music-result">
             <h2 className="jalnan">
@@ -149,25 +153,29 @@ const MusicResult = ({ isPlaying, stopAllAudios, setIsPlaying }) => {
                     activeTab === index ? "block" : "hidden"
                   }`}
                 >
-                  <div className="album-cover relative">
-                    <img src={song.imgUrl} alt="Album Cover" />
-                    <div className="flex space-x-4 mt-4">
-                      <button
-                        className="play-button"
-                        onClick={() => togglePlayPause(index)}
-                      >
-                        {isPlayingState[index] ? "⏸" : "▶"}
-                      </button>
-                      <button
-                        onClick={() => handleDownload(song)}
-                        className="download-button"
-                      >
-                        다운로드
-                      </button>
+                  <div className="album-cover-wrapper">
+                    <div className="album-cover relative">
+                      <img src={song.imgUrl} alt="Album Cover" />
+                      <div className="flex space-x-4 mt-4">
+                        <button
+                          className="play-button"
+                          onClick={() => togglePlayPause(index)}
+                        >
+                          {isPlayingState[index] ? "⏸" : "▶"}
+                        </button>
+                        <button
+                          onClick={() => handleDownload(song)}
+                          className="download-button"
+                        >
+                          다운로드
+                        </button>
+                      </div>
                     </div>
                   </div>
-                  <div className="lyrics-section">
-                    <pre>{song.lyric}</pre>
+                  <div className="lyrics-wrapper">
+                    <div className="lyrics-section">
+                      <pre>{song.lyric}</pre>
+                    </div>
                   </div>
                 </div>
               ))}
@@ -175,7 +183,7 @@ const MusicResult = ({ isPlaying, stopAllAudios, setIsPlaying }) => {
 
             <button
               className="create-song-button"
-              onClick={() => handleNavigation("/adSelect-page")}
+              onClick={() => handleNavigation("/adSelect-page", activeTab)}
             >
               지금 바로 광고하기
             </button>
