@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import NavTabs from "../../components/NavTabs/navTabs.js";
+import Slider from "react-slick";
 import "./MusicResult.css";
 
-const MusicResult = () => {
+const MusicResult = ({ isPlaying, stopAllAudios, setIsPlaying }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const initialData =
@@ -13,7 +14,9 @@ const MusicResult = () => {
   const imgUrl = data?.image?.url;
 
   const [audios, setAudios] = useState([]);
-  const [isPlaying, setIsPlaying] = useState(Array(songs.length).fill(false));
+  const [isPlayingState, setIsPlayingState] = useState(
+    Array(songs.length).fill(false)
+  );
   const [activeTab, setActiveTab] = useState(0);
 
   useEffect(() => {
@@ -24,13 +27,11 @@ const MusicResult = () => {
   }, [location.state]);
 
   useEffect(() => {
-    const audioElements = songs.map((song) => {
+    const audioElements = songs.map((song, index) => {
       const audioElement = new Audio(song.url);
       audioElement.addEventListener("ended", () => {
-        setIsPlaying((prev) =>
-          prev.map((playing, index) =>
-            audios[index] === audioElement ? false : playing
-          )
+        setIsPlayingState((prevState) =>
+          prevState.map((playing, i) => (i === index ? false : playing))
         );
       });
       return audioElement;
@@ -40,7 +41,7 @@ const MusicResult = () => {
 
   useEffect(() => {
     const handleBeforeUnload = (event) => {
-      if (isPlaying.some((playing) => playing)) {
+      if (isPlayingState.some((playing) => playing)) {
         event.preventDefault();
         event.returnValue = "";
         return "";
@@ -52,20 +53,24 @@ const MusicResult = () => {
     return () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
-  }, [isPlaying]);
+  }, [isPlayingState]);
 
   const togglePlayPause = (index) => {
-    setIsPlaying((prev) =>
-      prev.map((playing, i) => {
+    setIsPlayingState((prevIsPlayingState) =>
+      prevIsPlayingState.map((playing, i) => {
         if (i === index) {
           if (playing) {
             audios[i].pause();
           } else {
+            audios.forEach((audio, j) => {
+              if (j !== i) {
+                audio.pause();
+              }
+            });
             audios[i].play();
           }
           return !playing;
         } else {
-          audios[i].pause();
           return false;
         }
       })
@@ -73,10 +78,32 @@ const MusicResult = () => {
   };
 
   const handleNavigation = (path) => {
-    if (isPlaying.some((playing) => playing)) {
-      navigate(path);
+    if (isPlayingState.some((playing) => playing)) {
+      const confirmNavigation = window.confirm(
+        "페이지를 이동하면 노래가 중지됩니다. 계속하시겠습니까?"
+      );
+      if (confirmNavigation) {
+        audios.forEach((audio) => audio.pause());
+        setIsPlayingState(Array(songs.length).fill(false));
+        navigate(path);
+      }
     } else {
       navigate(path);
+    }
+  };
+
+  const handleTabChange = (index) => {
+    if (isPlayingState.some((playing) => playing)) {
+      const confirmTabChange = window.confirm(
+        "탭을 변경하면 노래가 중지됩니다. 계속하시겠습니까?"
+      );
+      if (confirmTabChange) {
+        audios.forEach((audio) => audio.pause());
+        setIsPlayingState(Array(songs.length).fill(false));
+        setActiveTab(index);
+      }
+    } else {
+      setActiveTab(index);
     }
   };
 
@@ -94,6 +121,14 @@ const MusicResult = () => {
     return <div>Loading...</div>; // 또는 적절한 대체 UI
   }
 
+  const sliderSettings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+  };
+
   return (
     <div className="bg-gray">
       <div className="flex flex-col h-screen pt-16 pb-16">
@@ -103,7 +138,11 @@ const MusicResult = () => {
               나만의 AI 작곡가가 만든 새로운 곡을 감상해보세요!
             </h2>
             <h1 className="song-title">제목: {songs[0].title}</h1>
-            <NavTabs activeTab={activeTab} setActiveTab={setActiveTab} />
+            <NavTabs
+              activeTab={activeTab}
+              setActiveTab={setActiveTab}
+              onTabChange={handleTabChange}
+            />
             <div className="songs-container">
               {songs.map((song, index) => (
                 <div
@@ -119,7 +158,7 @@ const MusicResult = () => {
                         className="play-button"
                         onClick={() => togglePlayPause(index)}
                       >
-                        {isPlaying[index] ? "⏸" : "▶"}
+                        {isPlayingState[index] ? "⏸" : "▶"}
                       </button>
                       <button
                         onClick={() => handleDownload(song)}
