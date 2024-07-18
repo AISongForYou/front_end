@@ -11,7 +11,6 @@ const MusicResult = ({ isPlaying, stopAllAudios, setIsPlaying }) => {
     location.state?.data || JSON.parse(localStorage.getItem("musicData")) || {};
   const [data, setData] = useState(initialData);
   const songs = data?.songs || [];
-  const imgUrl = data?.image?.url;
 
   const [audios, setAudios] = useState([]);
   const [isPlayingState, setIsPlayingState] = useState(
@@ -92,6 +91,22 @@ const MusicResult = ({ isPlaying, stopAllAudios, setIsPlaying }) => {
     }
   };
 
+  const handleDownload = async (song) => {
+    try {
+      const response = await fetch(song.url);
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", `${song.title}.mp4`);
+      document.body.appendChild(link);
+      link.click();
+      link.parentNode.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Error downloading the file", error);
+    }
+
   const handleTabChange = (index) => {
     if (isPlayingState.some((playing) => playing)) {
       const confirmTabChange = window.confirm(
@@ -115,7 +130,7 @@ const MusicResult = ({ isPlaying, stopAllAudios, setIsPlaying }) => {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-  };
+
 
   if (!data?.songs) {
     return <div>Loading...</div>; // 또는 적절한 대체 UI
@@ -152,7 +167,7 @@ const MusicResult = ({ isPlaying, stopAllAudios, setIsPlaying }) => {
                   }`}
                 >
                   <div className="album-cover relative">
-                    <img src={imgUrl} alt="Album Cover" />
+                    <img src={song.imgUrl} alt="Album Cover" />
                     <div className="flex space-x-4 mt-4">
                       <button
                         className="play-button"
