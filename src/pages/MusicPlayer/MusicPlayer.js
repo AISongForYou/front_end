@@ -3,7 +3,6 @@ import './MusicPlayer.css';
 
 const MusicPlayer = ({ cover, song, title, artist }) => {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [showDownloadBox, setShowDownloadBox] = useState(false);
   const audioRef = useRef(null);
 
   const handlePlayPause = () => {
@@ -42,12 +41,9 @@ const MusicPlayer = ({ cover, song, title, artist }) => {
         <button className="control-button" onClick={handlePlayPause}>
           {isPlaying ? '❚❚' : '▶'}
         </button>
-        <button className="control-button" onClick={() => setShowDownloadBox(!showDownloadBox)}>⋮</button>
-        {showDownloadBox && (
-          <div className="download-box">
-            <button className="download-button" onClick={handleDownload}>다운로드</button>
-          </div>
-        )}
+        <button className="control-button" onClick={handleDownload}>
+          <img src={`${process.env.PUBLIC_URL}/download.png`} alt="Download" className="download-icon" />
+        </button>
       </div>
       <audio ref={audioRef} src={song}></audio>
     </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 
@@ -7,6 +7,7 @@ const LoadingPage = () => {
   const location = useLocation();
   const payload = location.state?.payload;
   const videoRef = useRef(null);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -17,21 +18,47 @@ const LoadingPage = () => {
           payload
         );
         console.log("성공:", response.data);
-        navigate("/music-result", { state: { data: response.data } });
+        // Check if any part of response.data is null
+        if (Object.values(response.data).some(value => value === null)) {
+          setError(true);
+        } else {
+          navigate("/music-result", { state: { data: response.data } });
+        }
       } catch (error) {
         console.error("에러:", error);
-        // Handle error if needed
+        setError(true);
       }
     };
-  
+
     fetchData();
-  }, []); // 종속성 배열을 빈 배열로 설정
+  }, []); // 종속성 배열을 빈 배열로 설
 
   useEffect(() => {
     if (videoRef.current) {
       videoRef.current.volume = 0.3;
     }
   }, []);
+
+  const handleRetry = () => {
+    navigate("/");
+  };
+
+  if (error) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen bg-white">
+        <div className="p-6 bg-red-100 rounded-lg shadow-lg">
+          <p className="text-lg text-red-500">재시도 해주세요.</p>
+          <p className="text-sm text-gray-500 mb-4">잠시 후 메인 페이지로 돌아갑니다.</p>
+          <button
+            onClick={handleRetry}
+            className="px-4 py-2 bg-blue-500 text-white rounded-lg"
+          >
+            메인 페이지로 돌아가기
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-white">
