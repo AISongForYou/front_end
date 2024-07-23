@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import NavTabs from "../../components/NavTabs/navTabs.js";
 import "./MusicResult.css";
+import Navbar from "../../components/Navbar/Navbar.js";
+import TabBar from "../../components/tabBar.js";
 
 const MusicResult = ({ isPlaying, stopAllAudios, setIsPlaying }) => {
   const location = useLocation();
@@ -136,10 +138,11 @@ const MusicResult = ({ isPlaying, stopAllAudios, setIsPlaying }) => {
       <div className="flex flex-col h-screen pt-4 pb-16">
         <div className="p-6 overflow-auto flex-grow">
           <div className="music-result">
-            <h2 className="jalnan">
-              나만의 AI 작곡가가 만든 새로운 곡을 감상해보세요!
+            <Navbar handleNavigation={handleNavigation} />
+            <h2 className="kopub font-bold">
+              AI가 멋진 광고음악을 만들었어요!
             </h2>
-            <h1 className="song-title">제목: {songs[0].title}</h1>
+            <h1 className="song-title font-bold">제목: {songs[0].title}</h1>
             <NavTabs
               activeTab={activeTab}
               setActiveTab={setActiveTab}
@@ -190,6 +193,11 @@ const MusicResult = ({ isPlaying, stopAllAudios, setIsPlaying }) => {
           </div>
         </div>
       </div>
+      <TabBar
+        isPlaying={isPlaying}
+        stopAllAudios={stopAllAudios}
+        handleNavigation={handleNavigation}
+      />
     </div>
   );
 };

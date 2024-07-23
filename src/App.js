@@ -13,6 +13,7 @@ import {
   Route,
   Navigate,
   useLocation,
+  useNavigate,
 } from "react-router-dom";
 import TabBar from "./components/tabBar";
 
@@ -35,15 +36,27 @@ function AppContent() {
   }, []);
 
   const location = useLocation();
-  const isMainPage = location.pathname === "/";
+  const navigate = useNavigate();
+  const isLoadingPage = location.pathname === "/loading-page";
   const isQuestionPage = location.pathname.startsWith("/question");
+  const isResultPage = location.pathname === "/music-result";
+
+  const handleNavigation = (path) => {
+    if (isPlaying) {
+      const confirmNavigation = window.confirm(
+        "페이지를 이동하면 노래가 중지됩니다. 계속하시겠습니까?"
+      );
+      if (confirmNavigation) {
+        stopAllAudios();
+        navigate(path);
+      }
+    } else {
+      navigate(path);
+    }
+  };
 
   return (
-    <div
-      className={`flex flex-col h-screen ${
-        isMainPage ? "overflow-hidden" : "overflow-auto"
-      }`}
-    >
+    <div className={`flex flex-col h-screen`}>
       {showText ? (
         <header className="App-header">
           <h1 className="fade-in-text">당신의 비즈니스를 들려주세요</h1>
@@ -51,7 +64,7 @@ function AppContent() {
         </header>
       ) : (
         <>
-          <Navbar />
+          {!isResultPage && <Navbar handleNavigation={handleNavigation} />}
           <div className="flex-grow">
             <Routes>
               <Route path="/" element={<MainContent />} />
@@ -81,8 +94,8 @@ function AppContent() {
               <Route path="/adSelect-page" element={<AdSelectPage />} />
             </Routes>
           </div>
-          {!isQuestionPage && (
-            <TabBar isPlaying={isPlaying} stopAllAudios={stopAllAudios} />
+          {!isQuestionPage && !isLoadingPage && !isResultPage && (
+            <TabBar handleNavigation={handleNavigation} />
           )}
         </>
       )}

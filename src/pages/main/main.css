@@ -42,7 +42,6 @@ h1 {
 
 .jalnan {
   font-family: 'Jalnan2', sans-serif;
-  font-size: 2.5em;
   color: #007bff;
 }
 
@@ -220,10 +219,4 @@ h1.note {
   max-width: 1040px;
   margin-left: auto;
   margin-right: auto;
-}
-
-.no-scroll {
-  overflow: hidden;
-  height: 100%;
-  width: 100%;
 }

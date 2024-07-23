@@ -1,0 +1,31 @@
+@font-face {
+    font-family: 'KoPubDotumMedium';
+    src: url('../../fonts/KoPubDotumMedium.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Jalnan2';
+    src: url('../../fonts/Jalnan2TTF.ttf') format('truetype');
+}
+
+.music-result {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    margin-top: 10px;
+}
+
+.kopub {
+    font-family: 'KoPubDotumMedium', sans-serif;
+    color: gray;
+    margin: 5px 0;
+}
+
+.jalnan {
+    text-align: center;
+    font-family: 'Jalnan2', sans-serif;
+    font-size: 1em;
+    padding: 10px 30px;
+    color: #007b
+}

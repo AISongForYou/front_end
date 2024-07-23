@@ -5,6 +5,8 @@ import { ArrowLeftIcon } from "@heroicons/react/20/solid";
 import InfoCard from "../../components/infoCard"; // InfoCard 컴포넌트 임포트
 import Modal from "../../components/modal"; // Modal 컴포넌트 임포트
 import NoticeAlert from "../../components/noticeAlert";
+import "./adSelect.css";
+
 import {
   CheckCircleIcon,
   XMarkIcon,
@@ -72,9 +74,9 @@ const AdSelectPage = () => {
               onClick={() => handleButtonClick("aiRingoPage")}
             >
               KT 링고
-              <div className="font-medium text-base">
+              <div className="font-medium text-base kopub text-white">
                 - 사업장 전화에 지금 제작한 CM송으로 통화연결음을 설정할 수
-                있어요!
+                있어요.
               </div>
             </button>
             <button
@@ -82,8 +84,8 @@ const AdSelectPage = () => {
               onClick={() => handleButtonClick("comingSoon")}
             >
               KT V컬러링
-              <div className="font-medium text-base">
-                - 이미지와 함께 CM송으로 보이는 컬러링을 설정할 수 있어요!
+              <div className="font-medium text-base kopub text-white">
+                - 이미지와 함께 CM송으로 보이는 컬러링을 설정할 수 있어요.
               </div>
             </button>
             <button
@@ -91,7 +93,7 @@ const AdSelectPage = () => {
               onClick={() => handleButtonClick("comingSoon")}
             >
               KT 바로광고
-              <div className="font-medium text-base">
+              <div className="font-medium text-base kopub text-white">
                 - 준비중인 서비스입니다.
               </div>
             </button>
@@ -100,7 +102,7 @@ const AdSelectPage = () => {
               onClick={() => handleButtonClick("comingSoon")}
             >
               KT 광고대행
-              <div className="font-medium text-base">
+              <div className="font-medium text-base kopub text-white">
                 - 준비중인 서비스입니다.
               </div>
             </button>

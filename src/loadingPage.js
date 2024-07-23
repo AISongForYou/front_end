@@ -23,7 +23,7 @@ const LoadingPage = () => {
         // Handle error if needed
       }
     };
-  
+
     fetchData();
   }, []); // 종속성 배열을 빈 배열로 설정
 
@@ -36,7 +36,7 @@ const LoadingPage = () => {
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-white">
       <div className="w-full max-w-lg">
-        <div className="relative pb-9/16">
+        <div className="relative pb-9/16 overflow-hidden">
           <video
             ref={videoRef}
             src={`${process.env.PUBLIC_URL}/loadingVideo.mp4`}
@@ -44,6 +44,12 @@ const LoadingPage = () => {
             controls
             autoPlay
             loop
+            style={{
+              objectFit: "cover",
+              maxWidth: "100%",
+              maxHeight: "100%",
+              overflow: "hidden",
+            }}
           ></video>
         </div>
       </div>

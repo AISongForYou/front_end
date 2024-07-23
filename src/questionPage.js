@@ -19,8 +19,8 @@ const questions = [
       "홍보하고자 하는 제품/서비스명을 입력해주세요.",
     ],
     required: [true, false],
-    titles: ["- 비즈니스 소개", "제품/서비스 입력"],
-    tipsTitle: ["노래 잘 뽑는 법 1"],
+    titles: ["", "홍보하고자 하는 제품/서비스가 있나요?"],
+    tipsTitle: ["Tip!"],
     tips: [
       "홍보하고자 하는 서비스나 매장명을 입력하면 좋아요.",
       "꼭 필요한 내용만 간단히 입력해주세요.",
@@ -32,20 +32,20 @@ const questions = [
     text: "만들고 싶은 노래 장르와\n강조할 내용을 입력해 주세요.",
     placeholders: ["노래에 꼭 어필되었으면 하는 내용을 입력해주세요."],
     required: [true],
-    titles: ["- 강조할 내용"],
-    tipsTitle: ["노래 잘 뽑는 법 2"],
+    titles: ["강조하고 싶은 내용이 있나요?"],
+    tipsTitle: ["Tip!"],
     tips: ["우리 가게만의 특/장점 서비스 혹은 이벤트를 소개해주세요."],
     example: "첫 방문 고객에게 요가 매트 무료 제공 이벤트를 홍보하고 싶어요.",
   },
   {
-    text: "광고이미지도!!! 제작해드립니다.",
+    text: "멋진 광고 이미지도 만들어드려요",
     placeholders: [
       "광고 사진에 담겼으면 하는 느낌이나 스타일을 입력해주세요.",
       "이미지에 들어갔으면 하는 광고 문구를 입력해주세요.",
     ],
     required: [false, false],
     titles: ["이미지 분위기 입력", "광고 이미지 문구 입력"],
-    tipsTitle: ["광고 이미지 잘 뽑는 법"],
+    tipsTitle: ["Tip!"],
     tips: [
       "비즈니스와 어울리는 이미지 스타일을 입력하면 좋아요.",
       "이미지 문구는 간결하게 입력해주세요.",
@@ -72,6 +72,9 @@ function QuestionPage({ surveyData, setSurveyData }) {
   const [selectedTags, setSelectedTags] = useState(
     surveyData[questionId]?.selectedTags || []
   );
+  const [customGenre, setCustomGenre] = useState(
+    surveyData[questionId]?.customGenre || ""
+  );
 
   useEffect(() => {
     setAnswers(
@@ -81,6 +84,7 @@ function QuestionPage({ surveyData, setSurveyData }) {
     setShowAlert(false);
     setToggles(currentQuestion.required.map((isRequired) => isRequired));
     setSelectedTags(surveyData[questionId]?.selectedTags || []);
+    setCustomGenre(surveyData[questionId]?.customGenre || "");
   }, [
     questionId,
     surveyData,
@@ -108,7 +112,9 @@ function QuestionPage({ surveyData, setSurveyData }) {
       currentQuestion.required.some(
         (isRequired, index) => isRequired && answers[index].trim() === ""
       ) ||
-      (questionId === 2 && selectedTags.length === 0)
+      (questionId === 2 &&
+        selectedTags.length === 0 &&
+        customGenre.trim() === "")
     ) {
       setShowAlert(true);
       return;
@@ -116,7 +122,7 @@ function QuestionPage({ surveyData, setSurveyData }) {
 
     const newSurveyData = {
       ...surveyData,
-      [questionId]: { answers, selectedTags },
+      [questionId]: { answers, selectedTags, customGenre },
     };
     setSurveyData(newSurveyData);
 
@@ -128,7 +134,10 @@ function QuestionPage({ surveyData, setSurveyData }) {
         product: newSurveyData[1]?.answers[1] || null,
         business: newSurveyData[1]?.answers[0] || null,
         emphasis: newSurveyData[2]?.answers[0] || null,
-        genre: newSurveyData[2]?.selectedTags.join(", ") || null,
+        genre:
+          [...newSurveyData[2]?.selectedTags, newSurveyData[2]?.customGenre]
+            .filter(Boolean)
+            .join(", ") || null,
         imageStyle: newSurveyData[3]?.answers[0] || null,
         addPhrases: newSurveyData[3]?.answers[1] || null,
       };
@@ -170,6 +179,8 @@ function QuestionPage({ surveyData, setSurveyData }) {
             <TagSelector
               selectedTags={selectedTags}
               setSelectedTags={setSelectedTags}
+              customGenre={customGenre}
+              setCustomGenre={setCustomGenre}
             />
           </div>
         )}
@@ -194,7 +205,7 @@ function QuestionPage({ surveyData, setSurveyData }) {
                 value={answers[index] || ""}
                 onChange={(e) => handleChange(index, e.target.value)}
                 placeholder={placeholder}
-                className={`w-full p-3 text-base rounded-md border border-gray-300 bg-gray-600 text-white resize-none ${
+                className={`w-full p-3 text-base rounded-md bg-gray-100 text-gray-700 resize-none ${
                   currentQuestion.required[index] ? "h-40" : "h-14"
                 }`}
               />
@@ -229,7 +240,7 @@ function QuestionPage({ surveyData, setSurveyData }) {
               예시 펼치기
             </button>
             {showExample && (
-              <div className="mt-2 p-2 border border-gray-300 rounded bg-gray-100 text-gray-600 text-sm leading-loose whitespace-pre-line">
+              <div className="mt-2 p-2 border-gray-300 rounded bg-gray-100 text-gray-600 text-sm leading-loose whitespace-pre-line">
                 <p>{currentQuestion.example}</p>
               </div>
             )}

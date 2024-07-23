@@ -37,7 +37,7 @@
 .slide-up-text {
   font-family: 'Jalnan2', sans-serif;
   /* 원하는 폰트 설정 */
-  font-size: 5rem;
+  font-size: 4rem;
   /* 원하는 크기 설정 */
   background: linear-gradient(to right, #0000ff, #00ffff);
   /* 블루 그라데이션 색상 */
@@ -67,10 +67,4 @@
     opacity: 1;
     top: 0;
   }
-}
-
-.no-scroll {
-  overflow: hidden;
-  height: 100%;
-  width: 100%;
 }

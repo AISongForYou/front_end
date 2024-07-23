@@ -2,13 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./Navbar.css";
 
-const Navbar = () => {
-  const navigate = useNavigate();
-
-  const handleLogoClick = () => {
-    navigate("/");
-  };
-
+const Navbar = ({ handleNavigation }) => {
   return (
     <div className="navbar">
       <div className="navbar-left">
@@ -19,7 +13,7 @@ const Navbar = () => {
           src="/song4ulogo.png"
           alt="Logo"
           className="logo-fixed"
-          onClick={handleLogoClick}
+          onClick={() => handleNavigation("/")}
           style={{ cursor: "pointer" }} // 스타일로 커서 모양 변경
         />
       </div>

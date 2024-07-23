@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 const tags = [
   "팝",
@@ -28,7 +28,12 @@ const tags = [
   "탱고",
 ];
 
-function TagSelector({ selectedTags, setSelectedTags }) {
+function TagSelector({
+  selectedTags,
+  setSelectedTags,
+  customGenre,
+  setCustomGenre,
+}) {
   const toggleTag = (tag) => {
     if (selectedTags.includes(tag)) {
       setSelectedTags(selectedTags.filter((t) => t !== tag));
@@ -42,13 +47,13 @@ function TagSelector({ selectedTags, setSelectedTags }) {
   };
 
   return (
-    <div className="p-4 bg-gray-600 text-white rounded-md">
-      <h2 className="text-lg mb-2 text-white">장르(최대 2개)</h2>
+    <div className="p-4 bg-gray-100 text-gray-700 rounded-md">
+      <h2 className="text-lg mb-2 text-gray-700">장르(최대 2개)</h2>
       <div className="mb-4">
         {selectedTags.map((tag) => (
           <span
             key={tag}
-            className="inline-block bg-blue-500 text-white py-1 px-3 rounded-full mr-2 mb-2 relative"
+            className="inline-block bg-blue-400 text-white py-1 px-3 rounded-full mr-2 mb-2 relative"
           >
             {tag}
             <span
@@ -67,13 +72,23 @@ function TagSelector({ selectedTags, setSelectedTags }) {
             onClick={() => toggleTag(tag)}
             className={`py-2 px-4 rounded-full whitespace-nowrap ${
               selectedTags.includes(tag)
-                ? "bg-blue-500 text-white"
-                : "bg-gray-800 text-gray-200"
+                ? "bg-blue-400 text-white"
+                : "bg-gray-700 text-gray-200"
             }`}
           >
             {tag}
           </button>
         ))}
+      </div>
+      <div className="mt-4">
+        <label className="block text-lg mb-2 ml-2">추가 장르 입력</label>
+        <input
+          type="text"
+          value={customGenre}
+          onChange={(e) => setCustomGenre(e.target.value)}
+          placeholder="사용자 입력 장르"
+          className="w-full p-3 text-base rounded-md border-gray-200 bg-gray-100 text-gray-700"
+        />
       </div>
     </div>
   );
