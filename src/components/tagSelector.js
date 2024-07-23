@@ -86,7 +86,7 @@ function TagSelector({
           type="text"
           value={customGenre}
           onChange={(e) => setCustomGenre(e.target.value)}
-          placeholder="사용자 입력 장르"
+          placeholder="자유롭게 음악스타일을 입력해주세요.(예: 차분한 느낌)"
           className="w-full p-3 text-base rounded-md border-gray-200 bg-gray-100 text-gray-700"
         />
       </div>

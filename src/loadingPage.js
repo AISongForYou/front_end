@@ -72,7 +72,8 @@ const LoadingPage = () => {
             ref={videoRef}
             src={`${process.env.PUBLIC_URL}/loadingVideo.mp4`}
             className="absolute top-0 left-0 w-full h-full"
-            controls
+            muted
+            playsinline
             autoPlay
             loop
             style={{
