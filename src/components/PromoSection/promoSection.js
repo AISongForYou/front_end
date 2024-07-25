@@ -14,7 +14,7 @@ const PromoSection = ({ onClick }) => {
         지금 광고음악 만들기 ▶
       </button>
       <img
-        src="./promoImage.png"
+        src="./promoImage2.png"
         alt="hihi"
         className="absolute bottom-0 right-0 w-32 h-40 md:w-48 md:h-48"
         style={{ objectFit: "cover", borderRadius: "0 0 0 0" }}
